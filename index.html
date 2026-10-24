@@ -152,6 +152,41 @@ button.vday:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .vday span:not(.vd):not(.tag){font-size:.88rem;color:var(--muted)}
 .vday .tag{align-self:flex-start;margin:4px 0 0}
 .sub{font-size:.88rem;color:var(--muted)}
+.wsel{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+.wsel::-webkit-scrollbar{display:none}
+.wsel button{flex:none;font:700 .95rem var(--display);min-width:46px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;position:relative}
+.wsel button.is-now::after{content:"";position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--race)}
+.wsel button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.whead{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.wphase{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.whead h3{font-size:1.5rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.wdates{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.sess-list{display:flex;flex-direction:column;gap:12px}
+.sess{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.sess.key{border-color:var(--accent)}
+.sess-top{display:flex;align-items:center;gap:8px}
+.sess-top .vd{font-family:var(--display);font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.sess-top .tag{margin:0}
+.tot{margin-left:auto;font-family:var(--display);font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums}
+.sess h4{margin:0;font-family:var(--display);font-size:1.3rem;line-height:1.1}
+.sbar{display:flex;height:12px;border-radius:6px;overflow:hidden;gap:2px;background:var(--surface)}
+.sbar i{display:block;min-width:3px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steps li{display:grid;grid-template-columns:72px 1fr auto;gap:8px;align-items:baseline;padding:7px 0;border-top:1px solid var(--line);font-size:.9rem}
+.steps .sm{font-weight:700;font-variant-numeric:tabular-nums}
+.steps .sd{min-width:0}
+.steps .sd small{display:block;color:var(--muted);font-size:.8rem}
+.zp{font-size:.72rem;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;justify-self:end}
+.sx{font-size:.85rem;color:var(--muted);margin:0}
+.zc{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.vlegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.78rem;color:var(--muted)}
+.sbar .z1,.zc.z1{background:#9DB4BC} .zp.z1{background:var(--mat);color:var(--muted)}
+.sbar .z2,.zc.z2{background:var(--easy)} .zp.z2{background:var(--easy-soft);color:var(--easy)}
+.sbar .hard,.zc.hard{background:var(--hard)} .zp.hard{background:var(--hard-soft);color:var(--hard)}
+.sbar .course,.zc.course{background:var(--race)} .zp.course{background:var(--race-soft);color:var(--race)}
+.sbar .force,.zc.force{background:#6B4FA0} .zp.force{background:#ECE5F7;color:#6B4FA0}
+.sbar .vite,.zc.vite{background:var(--accent)} .zp.vite{background:var(--accent-soft);color:var(--accent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .zp.force{background:#2E2440;color:#B9A3E3}}
 .fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:21;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent);color:var(--bg);font-size:2rem;line-height:1;box-shadow:0 8px 20px rgba(11,122,131,.35);cursor:pointer}
 .timer{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;--ph:var(--accent)}
 .timer[data-phase="work"]{--ph:var(--race)} .timer[data-phase="warm"]{--ph:var(--hard)} .timer[data-phase="prep"]{--ph:var(--easy)} .timer[data-phase="rest"]{--ph:var(--easy)} .timer[data-phase="long"]{--ph:var(--easy)} .timer[data-phase="done"]{--ph:var(--accent)}
@@ -268,32 +303,25 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </section>
 
 <section data-tab="velo">
-  <h2>Ta semaine vélo <small>3 séances</small></h2>
-  <div class="vweek">
-    <button type="button" class="vday key" data-f="mar" aria-pressed="false"><span class="vd">Mardi</span><b>Séance clé</b><span>Le contenu change chaque semaine, voir ci-dessous. Vélo d'appartement.</span><span class="tag t-hard">Qualité</span></button>
-    <button type="button" class="vday" data-f="jeu" aria-pressed="false"><span class="vd">Jeudi</span><b>30 à 40 min au total</b><span>Facultatif. Facile ou récupération selon la semaine, voir ci-dessous.</span><span class="tag t-easy">Facile</span></button>
-    <button type="button" class="vday" data-f="dim" aria-pressed="false"><span class="vd">Dimanche</span><b>Sortie longue, 50 min à 1 h 30</b><span>Zone 2 (112–129 bpm), en VTT ou vélo d'appartement. La durée augmente jusqu'à 1 h 30 mi-novembre, voir ci-dessous.</span><span class="tag t-easy">Endurance</span></button>
-  </div>
-  <p class="note-total"><b>Les durées sont des totaux</b> : l'échauffement et le retour au calme sont compris dedans. Le détail est indiqué pour chaque séance.</p>
-  <p class="sub">Trop fatiguée ? Supprime d'abord la séance du jeudi. Ne saute pas celle du mardi.</p>
-  <div class="vtools"><span class="sub" id="vfilter-msg">Touche une carte pour ne voir que ce jour-là.</span><button type="button" class="btn-ghost" id="goto-week">Aller à cette semaine ↓</button></div>
+  <h2>Vélo prépa <small>3 séances par semaine</small></h2>
 
-  <h2>Semaine par semaine <small>mardi · jeudi · dimanche</small></h2>
-  <div class="weeks" id="weeks">
-    <div class="phase">Base · construire le moteur</div>
-    <div class="wk easy" data-start="2026-10-12"><div class="wk-head"><h3>Semaine 1</h3><span class="dates">12 – 18 oct</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 1 h</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 45 min en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Total 40 min</b>, facultatif : 10 min d'échauffement en zone 1 (93–111 bpm), 25 min en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 1 h à 1 h 15</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 45 à 60 min en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p></div>
-    <div class="wk easy" data-start="2026-10-19"><div class="wk-head"><h3>Semaine 2</h3><span class="dates">19 – 25 oct</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 1 h 10</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 55 min en zone 2 (112–129 bpm), cadence 85–90, 5 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Total 40 min</b>, facultatif : 10 min d'échauffement en zone 1 (93–111 bpm), 25 min en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm). Bonus en plus (10 min) : 3 × 15 rowing penché + 2 × 40 s de gainage.</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 1 h 15</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 1 h en zone 2 (112–129 bpm), mode libre, 5 min de retour au calme en zone 1 (93–111 bpm).</span></p></div>
-    <div class="wk easy" data-start="2026-10-26"><div class="wk-head"><h3>Semaine 3</h3><span class="dates">26 oct – 1 nov</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 1 h 15</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 1 h en zone 2 (112–129 bpm), cadence 85–90, 5 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Total 40 min</b>, facultatif : 10 min d'échauffement en zone 1 (93–111 bpm), 25 min en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm). Bonus en plus : rowing penché + gainage.</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 1 h 15</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 55 min en zone 2 (112–129 bpm), 5 min de pédalage rapide (cadence 95–100, résistance légère, toujours en zone 2), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p></div>
-    <div class="phase">Seuil · monter en intensité</div>
-    <div class="wk hard" data-start="2026-11-02"><div class="wk-head"><h3>Semaine 4</h3><span class="dates">2 – 8 nov</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 1 h 05</b> : 15 min d'échauffement progressif (zone 1 (93–111 bpm) puis zone 2 (112–129 bpm)), puis <b>4 × 8 min dur mais tenable (145–155 bpm)</b>, cadence 85–95, avec 3 min faciles en zone 1 (93–111 bpm) entre chaque, puis 10 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Récupération, total 30 à 40 min</b> : tout en zone 1 (93–111 bpm), sans dépasser 120 bpm. Pas d'échauffement à part, pas de bonus.</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 1 h 20</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 1 h 05 en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p></div>
-    <div class="wk hard" data-start="2026-11-09"><div class="wk-head"><h3>Semaine 5</h3><span class="dates">9 – 15 nov</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 1 h 05</b> : même séance que la semaine 4, <b>4 × 8 min (145–155 bpm)</b> avec un peu plus de résistance. 15 min d'échauffement, 3 min faciles en zone 1 (93–111 bpm) entre chaque, 10 min de retour au calme.</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Récupération, total 30 à 40 min</b> : tout en zone 1 (93–111 bpm), sans dépasser 120 bpm.</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 1 h 30</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 1 h 15 en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm). Ta plus longue sortie du programme : une gourde et une banane.</span></p></div>
-    <div class="wk light" data-start="2026-11-16"><div class="wk-head"><h3>Semaine 6 · allégée</h3><span class="dates">16 – 22 nov</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 45 min</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 30 min en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm). Semaine allégée, renfo à moitié.</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Repos</b>, ou 20 min en zone 1 (93–111 bpm) si tu en as envie.</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 50 min</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 35 min en zone 2 (112–129 bpm), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p></div>
-    <div class="phase">Allure course</div>
-    <div class="wk race" data-start="2026-11-23"><div class="wk-head"><h3>Semaine 7</h3><span class="dates">23 – 29 nov</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 1 h 15</b> : 15 min d'échauffement progressif (zone 1 (93–111 bpm) puis zone 2 (112–129 bpm)), <b>4 × 6 min allure course (155–165 bpm)</b> avec 4 min faciles en zone 1 (93–111 bpm) entre chaque, 4 min faciles, puis <b>3 × 2 min en force</b> (cadence 60–65, grosse résistance) avec 2 min faciles entre chaque, et 10 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Total 35 min</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 20 min en zone 2 (112–129 bpm) avec <b>5 × 30 s de pédalage rapide</b> (cadence 105–110, résistance légère) et 1 min 30 facile entre chaque, 5 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 1 h 15</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 55 min en zone 2 (112–129 bpm) dont 4 accélérations de 20 s vers la fin (1 min facile entre chaque), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p></div>
-    <div class="wk race" data-start="2026-11-30"><div class="wk-head"><h3>Semaine 8</h3><span class="dates">30 nov – 6 déc</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span><b>Total 1 h 15</b> : 15 min d'échauffement progressif, <b>3 × 10 min allure course (155–165 bpm)</b> avec 4 min faciles en zone 1 (93–111 bpm) entre chaque, 4 min faciles, puis les <b>3 × 2 min en force</b> avec 2 min faciles entre chaque, et 10 min de retour au calme en zone 1 (93–111 bpm). 30 min à allure course : un peu plus que la course.</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span><b>Total 35 min</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 20 min en zone 2 (112–129 bpm) avec <b>5 × 30 s de pédalage rapide</b> (cadence 105–110), 5 min de retour au calme en zone 1 (93–111 bpm).</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Total 1 h</b> : 10 min d'échauffement en zone 1 (93–111 bpm), 40 min en zone 2 (112–129 bpm) dont 4 accélérations de 20 s vers la fin, 5 min de retour au calme en zone 1 (93–111 bpm). Pas plus : la semaine de course arrive.</span></p></div>
-    <div class="phase">Affûtage · arriver frais</div>
-    <div class="wk race" data-start="2026-12-07"><div class="wk-head"><h3>Semaine 9 · course</h3><span class="dates">7 – 13 déc</span></div><p class="vl vl-mar"><span class="vlab">Mar</span><span>Mar 8, <b>total 45 min</b> : 15 min d'échauffement progressif, <b>2 × 4 min allure course (155–165 bpm)</b> avec 4 min faciles entre, 4 min faciles, <b>3 sprints de 20 s</b> avec 1 min 40 facile entre chaque, puis 10 min de retour au calme en zone 1 (93–111 bpm). Mer 9 : mobilité seulement. Sam 12 : séance d'équipe courte.</span></p><p class="vl vl-jeu"><span class="vlab">Jeu</span><span>Jeu 10 : <b>20 min en zone 1 (93–111 bpm)</b>, ou repos.</span></p><p class="vl vl-dim"><span class="vlab">Dim</span><span><b>Dim 13 : la course !</b> Pas de vélo ce week-end.</span></p></div>
+  <div class="wsel" role="tablist" aria-label="Choisir une semaine" id="wsel"></div>
+  <div class="whead">
+    <div><span class="wphase" id="wphase"></span><h3 id="wtitle"></h3></div>
+    <span class="wdates" id="wdates"></span>
   </div>
+
+  <div class="sess-list" id="sess-list"></div>
+
+  <div class="vlegend" aria-label="Légende des zones">
+    <span><i class="zc z1"></i>Zone 1 · 93–111 bpm</span>
+    <span><i class="zc z2"></i>Zone 2 · 112–129 bpm</span>
+    <span><i class="zc hard"></i>Dur · 145–155 bpm</span>
+    <span><i class="zc course"></i>Allure course · 155–165 bpm</span>
+    <span><i class="zc force"></i>Force · cadence 60–65, grosse résistance</span>
+    <span><i class="zc vite"></i>Rapide · cadence 105–110</span>
+  </div>
+  <p class="sub">Les durées sont des <b>totaux</b> : échauffement et retour au calme compris. Trop fatiguée ? Supprime d'abord la séance du jeudi, jamais celle du mardi.</p>
 </section>
 
 <section data-tab="circuit">
@@ -777,44 +805,117 @@ render();
 
 <script>
 (function(){
+  var Z={z1:'Zone 1 · 93–111 bpm',z2:'Zone 2 · 112–129 bpm',hard:'Dur · 145–155 bpm',course:'Allure course · 155–165 bpm',force:'Force · cadence 60–65',vite:'Rapide · cadence 105–110'};
+  var ZT={z1:'zone 1 (93–111 bpm)',z2:'zone 2 (112–129 bpm)',hard:'dur mais tenable (145–155 bpm)',course:'allure course (155–165 bpm)',force:'en force (cadence 60–65, grosse résistance)',vite:'en pédalage rapide (cadence 105–110)'};
+  var EC=[10,'z1','Échauffement'], RC=[5,'z1','Retour au calme'], EP=[15,'z1','Échauffement progressif, finir en zone 2'], RL=[10,'z1','Retour au calme'];
+  function I(rep,on,onZ,onL,off,offZ){ return {rep:rep,on:[on,onZ,onL],off:[off,offZ||'z1','Facile']}; }
+  var W=[
+   {n:1,start:'2026-10-12',d:'12 – 18 oct',ph:'Base · construire le moteur',
+    mar:{t:'Endurance',s:[EC,[45,'z2','Endurance, cadence 85–90'],RC]},
+    jeu:{t:'Facile',opt:1,s:[EC,[25,'z2','Endurance'],RC]},
+    dim:{t:'Sortie longue',s:[EC,[50,'z2','Endurance'],RC]}},
+   {n:2,start:'2026-10-19',d:'19 – 25 oct',ph:'Base · construire le moteur',
+    mar:{t:'Endurance',s:[EC,[55,'z2','Endurance, cadence 85–90'],RC]},
+    jeu:{t:'Facile',opt:1,s:[EC,[25,'z2','Endurance'],RC],x:'Bonus en plus (10 min) : 3 × 15 rowing penché + 2 × 40 s de gainage.'},
+    dim:{t:'Sortie longue',s:[EC,[60,'z2','Endurance, mode libre'],RC]}},
+   {n:3,start:'2026-10-26',d:'26 oct – 1 nov',ph:'Base · construire le moteur',
+    mar:{t:'Endurance',s:[EC,[60,'z2','Endurance, cadence 85–90'],RC]},
+    jeu:{t:'Facile',opt:1,s:[EC,[25,'z2','Endurance'],RC],x:'Bonus en plus (10 min) : 3 × 15 rowing penché + 2 × 40 s de gainage.'},
+    dim:{t:'Sortie longue',s:[EC,[55,'z2','Endurance'],[5,'z2','Cadence 95–100, résistance légère'],RC]}},
+   {n:4,start:'2026-11-02',d:'2 – 8 nov',ph:'Seuil · monter en intensité',
+    mar:{t:'Seuil',s:[EP,I(4,8,'hard','Dur mais tenable, cadence 85–95',3),RL]},
+    jeu:{t:'Récupération',opt:1,s:[[35,'z1','Très facile, sans dépasser 120 bpm']],x:'Pas de bonus cette semaine.'},
+    dim:{t:'Sortie longue',s:[EC,[65,'z2','Endurance'],RC]}},
+   {n:5,start:'2026-11-09',d:'9 – 15 nov',ph:'Seuil · monter en intensité',
+    mar:{t:'Seuil',s:[EP,I(4,8,'hard','Dur mais tenable, un peu plus de résistance',3),RL]},
+    jeu:{t:'Récupération',opt:1,s:[[35,'z1','Très facile, sans dépasser 120 bpm']]},
+    dim:{t:'Sortie longue',s:[EC,[75,'z2','Endurance'],RC],x:'Ta plus longue sortie : une gourde et une banane.'}},
+   {n:6,start:'2026-11-16',d:'16 – 22 nov',ph:'Semaine allégée',
+    mar:{t:'Endurance courte',s:[EC,[30,'z2','Endurance'],RC],x:'Renfo à moitié cette semaine.'},
+    jeu:{t:'Repos',opt:1,s:[],x:'Repos, ou 20 min en zone 1 (93–111 bpm) si tu en as envie.'},
+    dim:{t:'Sortie courte',s:[EC,[35,'z2','Endurance'],RC]}},
+   {n:7,start:'2026-11-23',d:'23 – 29 nov',ph:'Allure course',
+    mar:{t:'Allure course + force',s:[EP,I(4,6,'course','Allure course',4),[4,'z1','Facile'],I(3,2,'force','Force : grosse résistance',2),RL]},
+    jeu:{t:'Vélocité',opt:1,s:[EC,[3,'z2','Endurance'],I(5,0.5,'vite','Pédalage rapide, résistance légère',1.5),[8,'z2','Endurance'],RC]},
+    dim:{t:'Sortie longue',s:[EC,[55,'z2','Endurance'],I(4,1/3,'vite','Accélération',1,'z2'),RC]}},
+   {n:8,start:'2026-11-30',d:'30 nov – 6 déc',ph:'Allure course',
+    mar:{t:'Allure course + force',s:[EP,I(3,10,'course','Allure course',4),[4,'z1','Facile'],I(3,2,'force','Force : grosse résistance',2),RL],x:'30 min à allure course : un peu plus que la course.'},
+    jeu:{t:'Vélocité',opt:1,s:[EC,[3,'z2','Endurance'],I(5,0.5,'vite','Pédalage rapide, résistance légère',1.5),[8,'z2','Endurance'],RC]},
+    dim:{t:'Sortie moyenne',s:[EC,[40,'z2','Endurance'],I(4,1/3,'vite','Accélération',1,'z2'),RC],x:'Pas plus : la semaine de course arrive.'}},
+   {n:9,start:'2026-12-07',d:'7 – 13 déc',ph:'Affûtage · arriver fraîche',
+    mar:{t:'Rappel allure course',s:[EP,I(2,4,'course','Allure course',4),[4,'z1','Facile'],I(3,1/3,'vite','Sprint',5/3),RL],x:'Mer 9 : mobilité seulement. Sam 12 : séance d’équipe courte.'},
+    jeu:{t:'Très facile',opt:1,s:[[20,'z1','Très facile']],x:'Ou repos.'},
+    dim:{t:'La course !',s:[],race:1,x:'Dimanche 13 : la course. Pas de vélo ce week-end.'}}
+  ];
+  var DAYS=[['mar','Mardi','Séance clé'],['jeu','Jeudi','Facultatif'],['dim','Dimanche','Sortie longue']];
+  function dur(m){ var sec=Math.round(m*60); if(sec<60) return sec+' s'; var mi=Math.floor(sec/60), s=sec%60; if(mi>=60){ var h=Math.floor(mi/60), r=mi%60; return h+' h'+(r?' '+String(r).padStart(2,'0'):''); } return mi+' min'+(s?' '+s:''); }
+  function total(sess){ var t=0; sess.s.forEach(function(x){ if(x.rep) t+=x.rep*x.on[0]+(x.rep-1)*x.off[0]; else t+=x[0]; }); return Math.round(t); }
+  function segs(sess){ var o=[]; sess.s.forEach(function(x){ if(x.rep){ for(var i=0;i<x.rep;i++){ o.push([x.on[0],x.on[1]]); if(i<x.rep-1) o.push([x.off[0],x.off[1]]); } } else o.push([x[0],x[1]]); }); return o; }
+  function esc(t){ return String(t).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  function stepHtml(x){
+    if(x.rep) return '<li><span class="sm">'+x.rep+' × '+dur(x.on[0])+'</span><span class="sd">'+esc(x.on[2])+'<small>récupération de '+dur(x.off[0])+' entre chaque, en '+ZT[x.off[1]]+'</small></span><span class="zp '+x.on[1]+'">'+Z[x.on[1]].split(' · ')[1]+'</span></li>';
+    return '<li><span class="sm">'+dur(x[0])+'</span><span class="sd">'+esc(x[2])+'</span><span class="zp '+x[1]+'">'+Z[x[1]].split(' · ')[1]+'</span></li>';
+  }
+  function card(day,label,sub,sess){
+    var tot=total(sess), sg=segs(sess);
+    var h='<article class="sess'+(day==='mar'?' key':'')+'"><div class="sess-top"><span class="vd">'+label+'</span>'+(sess.opt?'<span class="tag t-easy">Facultatif</span>':'')+(tot?'<span class="tot">'+dur(tot)+'</span>':'')+'</div><h4>'+esc(sess.t)+'</h4>';
+    if(sg.length) h+='<div class="sbar" aria-hidden="true">'+sg.map(function(g){return '<i class="'+g[1]+'" style="flex:'+g[0]+'"></i>';}).join('')+'</div><ol class="steps">'+sess.s.map(stepHtml).join('')+'</ol>';
+    if(sess.x) h+='<p class="sx">'+esc(sess.x)+'</p>';
+    return h+'</article>';
+  }
+  function text(sess){
+    if(!sess.s.length) return sess.x||'';
+    var parts=sess.s.map(function(x){ return x.rep ? x.rep+' × '+dur(x.on[0])+' '+ZT[x.on[1]]+' avec '+dur(x.off[0])+' de récupération entre chaque' : dur(x[0])+' '+(/chauffement|calme/.test(x[2])?x[2].toLowerCase()+' en ':'en ')+ZT[x[1]]; });
+    return 'Total '+dur(total(sess))+' : '+parts.join(', ')+'.'+(sess.x?' '+sess.x:'');
+  }
+  var now=new Date(); now.setHours(0,0,0,0);
+  var iso=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  var cur=0; W.forEach(function(w,i){ if(iso>=w.start) cur=i; });
+  window.VELO={week:function(){ return iso<W[0].start?null:W[cur]; }, text:text};
+  var sel=document.getElementById('wsel'); if(!sel) return;
+  var shown=cur;
+  try{ var sv=localStorage.getItem('velo_week'); if(sv!==null && W[+sv]) shown=+sv; }catch(e){}
+  if(iso<W[0].start) shown=0;
+  sel.innerHTML=W.map(function(w,i){ return '<button type="button" role="tab" data-i="'+i+'" class="'+(i===cur?'is-now':'')+'">S'+w.n+'</button>'; }).join('');
+  function render(i){
+    shown=i; var w=W[i];
+    [].forEach.call(sel.children,function(b,j){ b.setAttribute('aria-selected',j===i?'true':'false'); });
+    document.getElementById('wphase').textContent=w.ph;
+    document.getElementById('wtitle').innerHTML='Semaine '+w.n+(i===cur&&iso>=W[0].start?' <span class="now-pill">Cette semaine</span>':'');
+    document.getElementById('wdates').textContent=w.d;
+    document.getElementById('sess-list').innerHTML=DAYS.map(function(d){ return card(d[0],d[1],d[2],w[d[0]]); }).join('');
+    try{ localStorage.setItem('velo_week',String(i)); }catch(e){}
+    var b=sel.children[i]; if(b && b.scrollIntoView) b.scrollIntoView({block:'nearest',inline:'center'});
+  }
+  sel.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) render(+b.dataset.i); });
+  render(shown);
+})();
+</script>
+<script>
+(function(){
   var now=new Date(); now.setHours(0,0,0,0);
   var race=new Date(2026,11,13), d=Math.round((race-now)/86400000);
   var chip=document.getElementById('jchip'); if(chip) chip.textContent = d>0 ? 'J-'+d : (d===0?'Jour J':'Bravo');
   var el=document.getElementById('today'); if(!el) return;
   var JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'], MOIS=['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'];
   var iso=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
-  var wk=document.querySelector('.wk.now'), wkTxt=wk?(wk.querySelector('.vl-mar span:last-child')||wk.querySelector('p')).innerHTML:'', wkName=wk?wk.querySelector('h3').textContent:'';
+  var VW=window.VELO&&window.VELO.week(), vtxt=function(k){ return VW&&VW[k]? window.VELO.text(VW[k]).replace(/&/g,'&amp;').replace(/</g,'&lt;') : ''; };
   var t, p, btn=null, go=null, wd=now.getDay();
   if(d<0){ t='Course terminée 🎉'; p='Bravo pour ta course ! Raconte-moi comment ça s\u2019est passé.'; }
   else if(d===0){ t='Jour de course !'; p='5 km sur la Saône. Suis ton déroulé : échauffement, remontée facile, puis tout donner.'; btn='Voir le jour J'; go='jourj'; }
   else if(iso==='2026-12-12'){ t='Aviron · séance courte'; p='Quelques accélérations avec l\u2019équipe, sans te fatiguer. Pas de vélo ce week-end.'; }
   else if(iso==='2026-12-09'){ t='Mobilité seulement'; p='15 min d\u2019étirements doux. Pas de renfo cette semaine : tu arrives fraîche dimanche.'; }
   else if(wd===1){ t='Repos'; p='15 min d\u2019étirements si tu as envie. Ton corps assimile le travail du week-end.'; }
-  else if(wd===2){ t='Vélo intérieur · séance clé'; p=(wkName?wkName+' : ':'')+wkTxt; btn='Voir la séance'; go='velo'; }
+  else if(wd===2){ t='Vélo · '+(VW?VW.mar.t.toLowerCase():'séance clé'); p=vtxt('mar')||'Séance clé de la semaine, voir l\u2019onglet Vélo.'; btn='Voir la séance'; go='velo'; }
   else if(wd===3){ var light=iso>='2026-11-16'&&iso<='2026-11-22'; t='Renfo'+(iso>='2026-10-28'?' au club':''); p=(light?'Semaine allégée : renfo à moitié. ':'')+(iso>='2026-10-28'?'Si tu ne peux pas aller au club, fais le circuit maison.':'Circuit maison avec le chrono.'); btn='Ouvrir le circuit'; go='circuit'; }
-  else if(wd===4){ var jq=wk&&wk.querySelector('.vl-jeu span:last-child'); t='Vélo · au choix'; p=(jq?jq.innerHTML:'40 min facile en zone 2 (112–129 bpm).')+' Saute-la sans culpabiliser si tu es fatiguée.'; btn='Voir la semaine vélo'; go='velo'; }
+  else if(wd===4){ t='Vélo · '+(VW?VW.jeu.t.toLowerCase():'facile')+' (facultatif)'; p=(vtxt('jeu')||'40 min faciles en zone 2 (112–129 bpm).')+' Saute-la sans culpabiliser si tu es fatiguée.'; btn='Voir la séance'; go='velo'; }
   else if(wd===5){ t='Repos'; p='Prépare tes affaires pour l\u2019aviron de demain.'; }
   else if(wd===6){ t='Aviron avec l\u2019équipe'; p='Échauffe-toi 10 min à terre, et donne-toi à fond quand le coach fait pousser. Pense à noter ta séance.'; btn='Noter ma séance'; go='stats'; }
-  else { var dq=wk&&wk.querySelector('.vl-dim span:last-child'); t='Sortie vélo tranquille'; p=(dq?dq.innerHTML:'1 h à 1 h 15 en zone 2 (112–129 bpm).')+' Vélo d\u2019appartement ou VTT, en mode libre.'; btn='Noter ma séance'; go='stats'; }
+  else { t='Vélo · '+(VW?VW.dim.t.toLowerCase():'sortie longue'); p=(vtxt('dim')||'1 h à 1 h 15 en zone 2 (112–129 bpm).')+' Vélo d\u2019appartement ou VTT, en mode libre.'; btn='Noter ma séance'; go='stats'; }
   el.innerHTML='<span class="eyebrow">Aujourd\u2019hui · '+JOURS[wd]+' '+now.getDate()+' '+MOIS[now.getMonth()]+'</span><h3></h3><p></p>'+(btn?'<button type="button"></button>':'');
   el.querySelector('h3').textContent=t; el.querySelector('p').innerHTML=p;
   if(btn){ var b=el.querySelector('button'); b.textContent=btn; b.addEventListener('click',function(){ if(window.__showTab) window.__showTab(go); if(go==='stats') setTimeout(function(){var c=document.getElementById('add-card'); if(c) c.scrollIntoView({behavior:'smooth'});},100); }); }
   el.hidden=false;
-})();
-</script>
-<script>
-(function(){
-  var cards=[].slice.call(document.querySelectorAll('button.vday')), weeks=document.getElementById('weeks'), msg=document.getElementById('vfilter-msg');
-  var NAMES={mar:'les mardis',jeu:'les jeudis',dim:'les dimanches'};
-  cards.forEach(function(c){ c.addEventListener('click',function(){
-    var on=c.getAttribute('aria-pressed')!=='true';
-    cards.forEach(function(x){x.setAttribute('aria-pressed','false');});
-    if(on){ c.setAttribute('aria-pressed','true'); weeks.dataset.filter=c.dataset.f; msg.textContent='Seulement '+NAMES[c.dataset.f]+'. Touche à nouveau la carte pour tout voir.'; }
-    else { delete weeks.dataset.filter; msg.textContent='Touche une carte pour ne voir que ce jour-là.'; }
-  }); });
-  var g=document.getElementById('goto-week');
-  g.addEventListener('click',function(){ var w=document.querySelector('#weeks .wk.now'); if(w) w.scrollIntoView({behavior:'smooth',block:'start'}); });
-  if(!document.querySelector('#weeks .wk.now')) g.hidden=true;
 })();
 </script>
 <script>setTimeout(function(){if(window.__statsReady)return;var e=document.getElementById('stats-status');if(e)e.textContent="Impossible de charger tes séances pour l'instant. Vérifie ta connexion internet, puis recharge la page.";},12000);</script>
