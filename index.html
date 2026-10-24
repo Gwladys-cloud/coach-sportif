@@ -187,6 +187,8 @@ button.vday:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .sbar .force,.zc.force{background:#6B4FA0} .zp.force{background:#ECE5F7;color:#6B4FA0}
 .sbar .vite,.zc.vite{background:var(--accent)} .zp.vite{background:var(--accent-soft);color:var(--accent)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .zp.force{background:#2E2440;color:#B9A3E3}}
+.bk-alert{background:var(--hard-soft);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:.9rem;margin:0}
+#backup-card{scroll-margin-top:72px}
 .fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:21;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent);color:var(--bg);font-size:2rem;line-height:1;box-shadow:0 8px 20px rgba(11,122,131,.35);cursor:pointer}
 .timer{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;--ph:var(--accent)}
 .timer[data-phase="work"]{--ph:var(--race)} .timer[data-phase="warm"]{--ph:var(--hard)} .timer[data-phase="prep"]{--ph:var(--easy)} .timer[data-phase="rest"]{--ph:var(--easy)} .timer[data-phase="long"]{--ph:var(--easy)} .timer[data-phase="done"]{--ph:var(--accent)}
@@ -501,6 +503,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
   <p class="sub" id="stats-status">Chargement de tes séances…</p>
 
   <div id="stats-body" hidden>
+    <p class="bk-alert" id="bk-alert" hidden>Pense à sauvegarder tes séances : ta dernière sauvegarde date de plus de 2 semaines. <button type="button" class="linkbtn" id="bk-jump">Sauvegarder</button></p>
     <div class="tiles" id="tiles"></div>
 
     <div class="card">
@@ -543,6 +546,13 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
         </select></label>
         <div class="frm-actions"><button type="submit" class="btn-main" id="f-submit">Ajouter la séance</button><span class="sub" id="f-msg" role="status"></span></div>
       </form>
+    </div>
+
+    <div class="card" id="backup-card">
+      <h3>Sauvegarde</h3>
+      <p class="sub" id="bk-status">Dernière sauvegarde : jamais.</p>
+      <div class="frm-actions"><button type="button" class="btn-main" id="bk-btn">Sauvegarder mes séances</button><span class="sub" id="bk-msg" role="status"></span></div>
+      <p class="sub">Crée un fichier avec toutes tes séances. Enregistre-le dans Fichiers ou iCloud Drive. Pour le restaurer, ouvre le fichier, copie son contenu et colle-le dans « Importer des séances ».</p>
     </div>
 
     <details class="card imp">

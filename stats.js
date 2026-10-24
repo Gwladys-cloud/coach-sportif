@@ -106,7 +106,7 @@ function connect(c){
   const col=collection(db,"espaces",code,"seances");
   unsub=onSnapshot(col, async (snap)=>{
     sessions=snap.docs.map(d=>({id:d.id,...d.data()}));
-    $("stats-status").hidden=true; $("stats-body").hidden=false; render(); const fb=$("fab"), st=document.querySelector('section[data-tab="stats"]'); if(fb&&st) fb.hidden=st.hidden;
+    $("stats-status").hidden=true; $("stats-body").hidden=false; render(); if(window.__bkInfo) window.__bkInfo(); const fb=$("fab"), st=document.querySelector('section[data-tab="stats"]'); if(fb&&st) fb.hidden=st.hidden;
   }, (err)=>{
     store(false,null);
     showCode(err && err.code==="permission-denied" ? "Ce code ne fonctionne pas, ou la base n'est pas encore configurée. Vérifie-le et réessaie." : "Impossible de joindre la base pour l'instant. Vérifie ta connexion internet et réessaie.");
@@ -143,6 +143,29 @@ function init(){
     if(!btn.classList.contains("confirm")){ btn.classList.add("confirm"); btn.textContent="Supprimer ?"; setTimeout(()=>{ if(btn.isConnected){btn.classList.remove("confirm"); btn.textContent="✕";} },4000); return; }
     btn.disabled=true;
     try{ await deleteDoc(doc(db,"espaces",code,"seances",btn.dataset.id)); }catch(err){ btn.disabled=false; btn.textContent="Échec"; }
+  });
+  function bkInfo(){
+    let last=null; try{ last=localStorage.getItem("coach_backup_"+code); }catch(e){}
+    const days = last ? Math.floor((Date.now()-Number(last))/86400000) : null;
+    $("bk-status").textContent = last ? ("Dernière sauvegarde sur ce téléphone : "+(days===0?"aujourd'hui":"il y a "+days+" jour"+(days>1?"s":""))+".") : "Dernière sauvegarde : jamais.";
+    $("bk-alert").hidden = !(sessions.length && (days===null || days>=14));
+  }
+  window.__bkInfo=bkInfo;
+  $("bk-jump").addEventListener("click",()=>{ $("backup-card").scrollIntoView({behavior:"smooth",block:"start"}); });
+  $("bk-btn").addEventListener("click", async ()=>{
+    if(!code||!sessions.length){ $("bk-msg").textContent="Aucune séance à sauvegarder."; return; }
+    const keep=["date","type","duree","dist","fcMoy","fcMax","ressenti","allure","best","arret"];
+    const data=[...sessions].sort((a,b)=>a.date<b.date?-1:1).map(x=>{ const o={}; keep.forEach(k=>{ if(x[k]!=null&&x[k]!=="") o[k]=x[k]; }); return o; });
+    const name="coach-sportif-sauvegarde-"+isoToday()+".json";
+    const blob=new Blob([JSON.stringify(data)],{type:"application/json"});
+    let ok=false;
+    try{
+      const file=new File([blob],name,{type:"application/json"});
+      if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file],title:"Sauvegarde Coach sportif"}); ok=true; }
+    }catch(e){ if(e && e.name==="AbortError"){ $("bk-msg").textContent="Sauvegarde annulée."; return; } }
+    if(!ok){ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000); ok=true; }
+    try{ localStorage.setItem("coach_backup_"+code,String(Date.now())); }catch(e){}
+    $("bk-msg").textContent=data.length+" séances sauvegardées ✓"; bkInfo();
   });
   $("imp-btn").addEventListener("click", async ()=>{
     if(!code) return; const msg=$("imp-msg"); let list;
