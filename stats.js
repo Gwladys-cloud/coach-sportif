@@ -106,7 +106,7 @@ function connect(c){
   const col=collection(db,"espaces",code,"seances");
   unsub=onSnapshot(col, async (snap)=>{
     sessions=snap.docs.map(d=>({id:d.id,...d.data()}));
-    $("stats-status").hidden=true; $("stats-body").hidden=false; render();
+    $("stats-status").hidden=true; $("stats-body").hidden=false; render(); const fb=$("fab"), st=document.querySelector('section[data-tab="stats"]'); if(fb&&st) fb.hidden=st.hidden;
   }, (err)=>{
     store(false,null);
     showCode(err && err.code==="permission-denied" ? "Ce code ne fonctionne pas, ou la base n'est pas encore configurée. Vérifie-le et réessaie." : "Impossible de joindre la base pour l'instant. Vérifie ta connexion internet et réessaie.");

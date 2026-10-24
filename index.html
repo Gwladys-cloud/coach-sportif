@@ -36,7 +36,7 @@
   --accent:#4FC3CB; --accent-soft:#163A40; --mat:#1B3239;
   --easy:#5CC98A; --easy-soft:#163326; --hard:#E9A93D; --hard-soft:#3A2C12; --race:#F07A63; --race-soft:#3E1F19; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:20px calc(110px + env(safe-area-inset-bottom,0px))}
 .wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05}
 h1{font-size:clamp(2.4rem,9vw,3.6rem);font-weight:800;text-transform:uppercase;letter-spacing:.01em}
@@ -116,10 +116,23 @@ svg .bar-bg{fill:var(--line)} svg .bar{fill:var(--accent)}
 .stretch{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
 .warmup ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:.93rem}
 .stretch ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:.93rem}
-.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding-block:8px;margin-block:-22px -14px;border-bottom:1px solid var(--line)}
-.tabs button{font-family:var(--display);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.02em;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 4px;cursor:pointer;line-height:1.1}
-.tabs button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -6px 20px rgba(15,42,51,.06)}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--muted);font:600 .68rem var(--body);letter-spacing:.01em;padding:6px 2px;border-radius:12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.tabs svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tabs button[aria-current="true"]{color:var(--accent)}
+.tabs button[aria-current="true"] svg{background:var(--accent-soft);border-radius:10px;padding:3px;width:44px;height:30px;box-sizing:border-box}
+.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);display:flex;align-items:center;gap:10px;padding-block:10px;margin-block:-10px -20px;border-bottom:1px solid var(--line)}
+.topbar .logo{width:34px;height:34px}
+.topbar b{font-family:var(--display);font-size:1.35rem;text-transform:uppercase;letter-spacing:.02em;flex:1;min-width:0}
+.jchip{font-family:var(--display);font-weight:700;font-size:1rem;background:var(--accent);color:var(--bg);border-radius:99px;padding:3px 10px;font-variant-numeric:tabular-nums}
+.today{background:var(--accent);color:var(--bg);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.today .eyebrow{color:var(--bg);opacity:.85}
+.today h3{font-size:1.6rem;line-height:1.05}
+.today p{font-size:.95rem;opacity:.95}
+.today button{align-self:flex-start;margin-top:4px;font:700 .9rem var(--body);background:var(--bg);color:var(--accent);border:none;border-radius:10px;padding:9px 14px;cursor:pointer}
+#add-card{scroll-margin-top:72px}
+.fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:21;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent);color:var(--bg);font-size:2rem;line-height:1;box-shadow:0 8px 20px rgba(11,122,131,.35);cursor:pointer}
 .timer{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;--ph:var(--accent)}
 .timer[data-phase="work"]{--ph:var(--race)} .timer[data-phase="warm"]{--ph:var(--hard)} .timer[data-phase="prep"]{--ph:var(--easy)} .timer[data-phase="rest"]{--ph:var(--easy)} .timer[data-phase="long"]{--ph:var(--easy)} .timer[data-phase="done"]{--ph:var(--accent)}
 .t-main{position:relative;width:150px;height:150px;flex:none;margin-inline:auto}
@@ -206,15 +219,12 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
   <div class="count"><span><b id="jours">64</b> jours avant la course</span><span><b>9</b> semaines</span><span><b>1</b> séance clé par semaine</span></div>
 </header>
 
-<nav class="tabs" aria-label="Rubriques">
-  <button type="button" id="tab-programme" data-go="programme">Programme</button>
-  <button type="button" id="tab-velo" data-go="velo">Vélo prépa</button>
-  <button type="button" id="tab-circuit" data-go="circuit">Renfo circuit</button>
-  <button type="button" id="tab-jourj" data-go="jourj">Jour J</button>
-  <button type="button" id="tab-stats" data-go="stats">Mes stats</button>
-</nav>
+<div class="topbar" id="topbar" hidden><svg class="logo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EAF9FB"/><stop offset="1" stop-color="#9FDCE4"/></linearGradient><linearGradient id="bl2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3CC3CD"/><stop offset="1" stop-color="#1497A2"/></linearGradient><g id="oar2"><rect x="-4" y="0" width="8" height="22" rx="4" fill="#0B4F57"/><rect x="-2.6" y="20" width="5.2" height="82" rx="2.6" fill="#0B6E77"/><rect x="-6" y="58" width="12" height="6" rx="2" fill="#0B4F57"/><path d="M-2.6 100 C10 108 15 128 12 152 C4 156 -7 153 -11 145 C-14 130 -9 112 -2.6 100 Z" fill="url(#bl2)" stroke="#0B6E77" stroke-width="2"/><path d="M-11 140 C-5 143 6 143 13 140" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/></g></defs><rect width="180" height="180" rx="40" fill="url(#lg2)"/><circle cx="90" cy="88" r="62" fill="#fff" opacity=".45"/><path d="M28 150 Q44 143 60 150 T92 150 T124 150 T156 150" stroke="#1497A2" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/><use href="#oar2" transform="translate(90 88) rotate(-34) translate(0 -78)"/><use href="#oar2" transform="translate(90 88) scale(-1 1) rotate(-34) translate(0 -78)"/></svg><b id="topbar-title">Coach sportif</b><span class="jchip" id="jchip">J-50</span></div>
+
+
 
 <section data-tab="programme">
+  <div class="today" id="today" hidden></div>
   <h2>Ta semaine type</h2>
   <div class="days">
     <div class="day"><div class="d">Lun</div><div class="what"><strong>Repos</strong><span class="tag t-rest">Repos</span><span>15 min d'étirements si tu as envie.</span></div></div>
@@ -452,7 +462,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
       <p class="sub">Durée = temps en mouvement. Pour supprimer une séance, touche ✕ puis confirme.</p>
     </div>
 
-    <div class="card">
+    <div class="card" id="add-card">
       <h3>Ajouter une séance</h3>
       <form id="add-form" class="frm">
         <label>Date<input type="date" id="f-date" required></label>
@@ -488,7 +498,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
   </div>
 </section>
 
-<footer>Ajoute tes séances dans l'onglet Mes stats. Pour une analyse de coach, envoie tes captures Garmin à Claude.</footer>
+<footer>Pour une analyse de coach, envoie tes captures Garmin à Claude.</footer>
 </div>
 
 <script>
@@ -593,18 +603,34 @@ requestAnimationFrame(frame);
 })();
 </script>
 
+<nav class="tabs" aria-label="Rubriques">
+  <button type="button" id="tab-programme" data-go="programme"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4M7.5 13.5h3M7.5 16.5h6"/></svg><span>Programme</span></button>
+  <button type="button" id="tab-velo" data-go="velo"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="16.5" r="3.5"/><circle cx="18.5" cy="16.5" r="3.5"/><path d="M5.5 16.5l4-7h6l3 7M9.5 9.5l3 7h-7M14 6h3"/></svg><span>Vélo</span></button>
+  <button type="button" id="tab-circuit" data-go="circuit"><svg viewBox="0 0 24 24"><path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/></svg><span>Renfo</span></button>
+  <button type="button" id="tab-jourj" data-go="jourj"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg><span>Jour J</span></button>
+  <button type="button" id="tab-stats" data-go="stats"><svg viewBox="0 0 24 24"><path d="M4 20h16M7 16v-5M12 16V6M17 16v-8"/></svg><span>Stats</span></button>
+</nav>
+<button type="button" class="fab" id="fab" aria-label="Ajouter une séance" hidden>+</button>
+
 <script>
 (function(){
 var secs=[].slice.call(document.querySelectorAll('section[data-tab]'));
 var btns=[].slice.call(document.querySelectorAll('.tabs button'));
+var TITLES={programme:'Coach sportif',velo:'Coach sportif',circuit:'Coach sportif',jourj:'Coach sportif',stats:'Coach sportif'};
 function show(t,scroll){
  if(!btns.some(function(b){return b.dataset.go===t;}))t='programme';
  secs.forEach(function(s){s.hidden=s.dataset.tab!==t;});
  btns.forEach(function(b){b.setAttribute('aria-current',b.dataset.go===t?'true':'false');});
+ document.querySelector('header').hidden=t!=='programme';
+ document.getElementById('topbar').hidden=t==='programme';
+ document.getElementById('topbar-title').textContent=TITLES[t];
+ var sb=document.getElementById('stats-body');document.getElementById('fab').hidden=t!=='stats'||!sb||sb.hidden;
  try{localStorage.setItem('tab',t);}catch(e){}
- if(scroll){var hd=document.querySelector('header');var y=hd.getBoundingClientRect().bottom+window.scrollY+6;if(window.scrollY>y)window.scrollTo(0,y);}
+ if(scroll)window.scrollTo(0,0);
 }
+window.__showTab=function(t){show(t,true);};
 btns.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go,true);});});
+document.getElementById('fab').addEventListener('click',function(){var c=document.getElementById('add-card');if(c){c.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var d=document.getElementById('f-duree');if(d)d.focus({preventScroll:true});},450);}});
 var h=(location.hash||'').slice(1),saved=null;
 try{saved=localStorage.getItem('tab');}catch(e){}
 show(h||saved||'programme',false);
@@ -718,6 +744,34 @@ render();
 })();
 </script>
 <script type="module" src="stats.js"></script>
+
+<script>
+(function(){
+  var now=new Date(); now.setHours(0,0,0,0);
+  var race=new Date(2026,11,13), d=Math.round((race-now)/86400000);
+  var chip=document.getElementById('jchip'); if(chip) chip.textContent = d>0 ? 'J-'+d : (d===0?'Jour J':'Bravo');
+  var el=document.getElementById('today'); if(!el) return;
+  var JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'], MOIS=['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'];
+  var iso=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  var wk=document.querySelector('.wk.now'), wkTxt=wk?wk.querySelector('p').innerHTML:'', wkName=wk?wk.querySelector('h3').textContent:'';
+  var t, p, btn=null, go=null, wd=now.getDay();
+  if(d<0){ t='Course terminée 🎉'; p='Bravo pour ta course ! Raconte-moi comment ça s\u2019est passé.'; }
+  else if(d===0){ t='Jour de course !'; p='5 km sur la Saône. Suis ton déroulé : échauffement, remontée facile, puis tout donner.'; btn='Voir le jour J'; go='jourj'; }
+  else if(iso==='2026-12-12'){ t='Aviron · séance courte'; p='Quelques accélérations avec l\u2019équipe, sans te fatiguer. Pas de vélo ce week-end.'; }
+  else if(iso==='2026-12-09'){ t='Mobilité seulement'; p='15 min d\u2019étirements doux. Pas de renfo cette semaine : tu arrives fraîche dimanche.'; }
+  else if(wd===1){ t='Repos'; p='15 min d\u2019étirements si tu as envie. Ton corps assimile le travail du week-end.'; }
+  else if(wd===2){ t='Vélo intérieur · séance clé'; p=(wkName?wkName+' : ':'')+wkTxt; btn='Voir la séance'; go='velo'; }
+  else if(wd===3){ var light=iso>='2026-11-16'&&iso<='2026-11-22'; t='Renfo'+(iso>='2026-10-28'?' au club':''); p=(light?'Semaine allégée : renfo à moitié. ':'')+(iso>='2026-10-28'?'Si tu ne peux pas aller au club, fais le circuit maison.':'Circuit maison avec le chrono.'); btn='Ouvrir le circuit'; go='circuit'; }
+  else if(wd===4){ t='Vélo facile · au choix'; p='40 min en zone 2 (112–129 bpm). Saute-la sans culpabiliser si tu es fatiguée.'; }
+  else if(wd===5){ t='Repos'; p='Prépare tes affaires pour l\u2019aviron de demain.'; }
+  else if(wd===6){ t='Aviron avec l\u2019équipe'; p='Échauffe-toi 10 min à terre, et donne-toi à fond quand le coach fait pousser. Pense à noter ta séance.'; btn='Noter ma séance'; go='stats'; }
+  else { t='VTT ou vélo tranquille'; p='1 h à 1 h 15 en zone 2, FC 115–130. Tu dois pouvoir parler.'; btn='Noter ma séance'; go='stats'; }
+  el.innerHTML='<span class="eyebrow">Aujourd\u2019hui · '+JOURS[wd]+' '+now.getDate()+' '+MOIS[now.getMonth()]+'</span><h3></h3><p></p>'+(btn?'<button type="button"></button>':'');
+  el.querySelector('h3').textContent=t; el.querySelector('p').innerHTML=p;
+  if(btn){ var b=el.querySelector('button'); b.textContent=btn; b.addEventListener('click',function(){ if(window.__showTab) window.__showTab(go); if(go==='stats') setTimeout(function(){var c=document.getElementById('add-card'); if(c) c.scrollIntoView({behavior:'smooth'});},100); }); }
+  el.hidden=false;
+})();
+</script>
 <script>setTimeout(function(){if(window.__statsReady)return;var e=document.getElementById('stats-status');if(e)e.textContent="Impossible de charger tes séances pour l'instant. Vérifie ta connexion internet, puis recharge la page.";},12000);</script>
 </body>
 </html>
