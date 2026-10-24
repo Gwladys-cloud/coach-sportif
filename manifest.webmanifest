@@ -1,0 +1,16 @@
+{
+  "name": "Coach sportif",
+  "short_name": "Coach",
+  "description": "Programme d'entraînement aviron jusqu'à la course du 13 décembre.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F3F7F8",
+  "theme_color": "#0B7A83",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
