@@ -174,6 +174,10 @@ svg .bar-bg{fill:var(--line)} svg .bar{fill:var(--accent)}
 .frm{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px 12px}
 .frm label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;font-weight:600;color:var(--muted);min-width:0}
 .frm input,.frm select,.frm-row input{font:16px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;min-width:0;width:100%}
+.frm input[type="date"]{-webkit-appearance:none;appearance:none;display:block;max-width:100%;text-align:left}
+.frm input[type="date"]::-webkit-date-and-time-value{text-align:left;margin:0}
+.frm input,.frm select{height:46px;line-height:1.2}
+.frm select{-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}
 .frm input:focus,.frm select:focus,.frm-row input:focus{outline:2px solid var(--accent);outline-offset:1px}
 .frm-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .frm-row{display:flex;gap:8px;flex-wrap:wrap}.frm-row input{flex:1 1 200px}
