@@ -132,6 +132,15 @@ svg .bar-bg{fill:var(--line)} svg .bar{fill:var(--accent)}
 .today p{font-size:.95rem;opacity:.95}
 .today button{align-self:flex-start;margin-top:4px;font:700 .9rem var(--body);background:var(--bg);color:var(--accent);border:none;border-radius:10px;padding:9px 14px;cursor:pointer}
 #add-card{scroll-margin-top:72px}
+h2{flex-wrap:wrap;row-gap:2px}
+.vweek{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.vday{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.vday.key{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.vday .vd{font-family:var(--display);font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.vday b{font-family:var(--display);font-size:1.3rem;line-height:1.1}
+.vday span:not(.vd):not(.tag){font-size:.88rem;color:var(--muted)}
+.vday .tag{align-self:flex-start;margin:4px 0 0}
+.sub{font-size:.88rem;color:var(--muted)}
 .fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:21;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent);color:var(--bg);font-size:2rem;line-height:1;box-shadow:0 8px 20px rgba(11,122,131,.35);cursor:pointer}
 .timer{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;--ph:var(--accent)}
 .timer[data-phase="work"]{--ph:var(--race)} .timer[data-phase="warm"]{--ph:var(--hard)} .timer[data-phase="prep"]{--ph:var(--easy)} .timer[data-phase="rest"]{--ph:var(--easy)} .timer[data-phase="long"]{--ph:var(--easy)} .timer[data-phase="done"]{--ph:var(--accent)}
@@ -248,7 +257,15 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </section>
 
 <section data-tab="velo">
-  <h2>Séance du mardi <small>vélo intérieur</small></h2>
+  <h2>Ta semaine vélo <small>3 séances</small></h2>
+  <div class="vweek">
+    <div class="vday key"><span class="vd">Mardi</span><b>Séance clé</b><span>Contenu selon la semaine, voir ci-dessous. Vélo d'appartement.</span><span class="tag t-hard">Qualité</span></div>
+    <div class="vday"><span class="vd">Jeudi</span><b>40 min facile</b><span>Zone 2 (112–129 bpm), cadence 85–90. Facultatif. Bonus : 3 × 15 rowing penché + 2 × 40 s de gainage.</span><span class="tag t-easy">Facile</span></div>
+    <div class="vday"><span class="vd">Dimanche</span><b>1 h à 1 h 15 tranquille</b><span>Zone 2, en VTT ou sur le vélo d'appartement. Mode libre, sans côtes.</span><span class="tag t-easy">Endurance</span></div>
+  </div>
+  <p class="sub">Trop fatiguée ? Supprime d'abord la séance du jeudi. Ne saute pas celle du mardi.</p>
+
+  <h2>Séance clé du mardi <small>semaine par semaine</small></h2>
   <div class="weeks" id="weeks">
     <div class="phase">Base · construire le moteur</div>
     <div class="wk easy" data-start="2026-10-12"><div class="wk-head"><h3>Semaine 1</h3><span class="dates">12 – 18 oct</span></div><p>1 h en endurance facile, cadence 85–90 tours/min, résistance légère.</p></div>
