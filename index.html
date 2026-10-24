@@ -233,7 +233,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
     <div class="day"><div class="d">Jeu</div><div class="what"><strong>Vélo intérieur facile · au choix</strong><span class="tag t-easy">Facile</span><span>40 min, tu dois pouvoir parler. À partir de novembre, ajoute 10 min de rowing haltères + gainage.</span></div></div>
     <div class="day"><div class="d">Ven</div><div class="what"><strong>Repos</strong><span class="tag t-rest">Repos</span><span>Étirements si tu as envie.</span></div></div>
     <div class="day key"><div class="d">Sam</div><div class="what"><strong>Aviron avec l'équipe</strong><span class="tag t-hard">Spécifique</span><span>Donne-toi à fond quand le coach fait pousser.</span></div></div>
-    <div class="day"><div class="d">Dim</div><div class="what"><strong>VTT tranquille</strong><span class="tag t-easy">Endurance</span><span>1 h à 1 h 30, FC moyenne 115–130, tu dois pouvoir parler.</span></div></div>
+    <div class="day"><div class="d">Dim</div><div class="what"><strong>Vélo tranquille</strong><span class="tag t-easy">Endurance</span><span>1 h à 1 h 15, en VTT ou sur le vélo d'appartement quand il fait froid. FC moyenne 112–129, tu dois pouvoir parler.</span></div></div>
   </div>
 </section>
 
@@ -765,7 +765,7 @@ render();
   else if(wd===4){ t='Vélo facile · au choix'; p='40 min en zone 2 (112–129 bpm). Saute-la sans culpabiliser si tu es fatiguée.'; }
   else if(wd===5){ t='Repos'; p='Prépare tes affaires pour l\u2019aviron de demain.'; }
   else if(wd===6){ t='Aviron avec l\u2019équipe'; p='Échauffe-toi 10 min à terre, et donne-toi à fond quand le coach fait pousser. Pense à noter ta séance.'; btn='Noter ma séance'; go='stats'; }
-  else { t='VTT ou vélo tranquille'; p='1 h à 1 h 15 en zone 2, FC 115–130. Tu dois pouvoir parler.'; btn='Noter ma séance'; go='stats'; }
+  else { t='Vélo tranquille'; p='1 h à 1 h 15 en zone 2 (112–129 bpm), sur le vélo d\u2019appartement ou en VTT. En intérieur, choisis le mode libre plutôt qu\u2019un parcours avec des côtes.'; btn='Noter ma séance'; go='stats'; }
   el.innerHTML='<span class="eyebrow">Aujourd\u2019hui · '+JOURS[wd]+' '+now.getDate()+' '+MOIS[now.getMonth()]+'</span><h3></h3><p></p>'+(btn?'<button type="button"></button>':'');
   el.querySelector('h3').textContent=t; el.querySelector('p').innerHTML=p;
   if(btn){ var b=el.querySelector('button'); b.textContent=btn; b.addEventListener('click',function(){ if(window.__showTab) window.__showTab(go); if(go==='stats') setTimeout(function(){var c=document.getElementById('add-card'); if(c) c.scrollIntoView({behavior:'smooth'});},100); }); }
