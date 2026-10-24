@@ -436,6 +436,23 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
     <div class="tiles" id="tiles"></div>
 
     <div class="card">
+      <h3>Vitesse en bateau</h3>
+      <p class="sub">Vitesse moyenne en déplacement (hors arrêts), sorties en huit.</p>
+      <div class="hbars" id="bars"></div>
+    </div>
+
+    <div class="card">
+      <h3>Mes séances</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Date</th><th>Séance</th><th>Durée</th><th>Distance</th><th>FC moy / max</th><th>Bilan</th><th></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p class="sub">Durée = temps en mouvement. Pour supprimer une séance, touche ✕ puis confirme.</p>
+    </div>
+
+    <div class="card">
       <h3>Ajouter une séance</h3>
       <form id="add-form" class="frm">
         <label>Date<input type="date" id="f-date" required></label>
@@ -458,23 +475,6 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
         </select></label>
         <div class="frm-actions"><button type="submit" class="btn-main" id="f-submit">Ajouter la séance</button><span class="sub" id="f-msg" role="status"></span></div>
       </form>
-    </div>
-
-    <div class="card">
-      <h3>Vitesse en bateau</h3>
-      <p class="sub">Vitesse moyenne en déplacement (hors arrêts), sorties en huit.</p>
-      <div class="hbars" id="bars"></div>
-    </div>
-
-    <div class="card">
-      <h3>Mes séances</h3>
-      <div class="tbl-wrap">
-        <table class="tbl">
-          <thead><tr><th>Date</th><th>Séance</th><th>Durée</th><th>Distance</th><th>FC moy / max</th><th>Bilan</th><th></th></tr></thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-      <p class="sub">Durée = temps en mouvement. Pour supprimer une séance, touche ✕ puis confirme.</p>
     </div>
 
     <details class="card imp">
