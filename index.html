@@ -230,7 +230,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
     <div class="day"><div class="d">Lun</div><div class="what"><strong>Repos</strong><span class="tag t-rest">Repos</span><span>15 min d'étirements si tu as envie.</span></div></div>
     <div class="day key"><div class="d">Mar</div><div class="what"><strong>Vélo intérieur · séance clé</strong><span class="tag t-hard">Qualité</span><span>Le contenu change selon la semaine : voir l'onglet Vélo prépa.</span></div></div>
     <div class="day"><div class="d">Mer</div><div class="what"><strong>Renfo le soir</strong><span class="tag t-hard">Force</span><span>Renfo au club à partir du 28 oct. Circuit maison seulement si tu rates le club.</span></div></div>
-    <div class="day"><div class="d">Jeu</div><div class="what"><strong>Vélo intérieur facile · au choix</strong><span class="tag t-easy">Facile</span><span>40 min, tu dois pouvoir parler. À partir de novembre, ajoute 10 min de rowing haltères + gainage.</span></div></div>
+    <div class="day"><div class="d">Jeu</div><div class="what"><strong>Vélo intérieur facile · au choix</strong><span class="tag t-easy">Facile</span><span>40 min, tu dois pouvoir parler. Bonus facultatif après le vélo (10 min) : 3 séries de 15 rowing penché avec les haltères (exercice 1 du Renfo), puis 2 fois 40 s de gainage.</span></div></div>
     <div class="day"><div class="d">Ven</div><div class="what"><strong>Repos</strong><span class="tag t-rest">Repos</span><span>Étirements si tu as envie.</span></div></div>
     <div class="day key"><div class="d">Sam</div><div class="what"><strong>Aviron avec l'équipe</strong><span class="tag t-hard">Spécifique</span><span>Donne-toi à fond quand le coach fait pousser.</span></div></div>
     <div class="day"><div class="d">Dim</div><div class="what"><strong>Vélo tranquille</strong><span class="tag t-easy">Endurance</span><span>1 h à 1 h 15, en VTT ou sur le vélo d'appartement quand il fait froid. FC moyenne 112–129, tu dois pouvoir parler.</span></div></div>
@@ -762,7 +762,7 @@ render();
   else if(wd===1){ t='Repos'; p='15 min d\u2019étirements si tu as envie. Ton corps assimile le travail du week-end.'; }
   else if(wd===2){ t='Vélo intérieur · séance clé'; p=(wkName?wkName+' : ':'')+wkTxt; btn='Voir la séance'; go='velo'; }
   else if(wd===3){ var light=iso>='2026-11-16'&&iso<='2026-11-22'; t='Renfo'+(iso>='2026-10-28'?' au club':''); p=(light?'Semaine allégée : renfo à moitié. ':'')+(iso>='2026-10-28'?'Si tu ne peux pas aller au club, fais le circuit maison.':'Circuit maison avec le chrono.'); btn='Ouvrir le circuit'; go='circuit'; }
-  else if(wd===4){ t='Vélo facile · au choix'; p='40 min en zone 2 (112–129 bpm). Saute-la sans culpabiliser si tu es fatiguée.'; }
+  else if(wd===4){ t='Vélo facile · au choix'; p='40 min en zone 2 (112–129 bpm). Bonus facultatif : 3 × 15 rowing penché haltères et 2 × 40 s de gainage. Saute-la sans culpabiliser si tu es fatiguée.'; btn='Voir le rowing penché'; go='circuit'; }
   else if(wd===5){ t='Repos'; p='Prépare tes affaires pour l\u2019aviron de demain.'; }
   else if(wd===6){ t='Aviron avec l\u2019équipe'; p='Échauffe-toi 10 min à terre, et donne-toi à fond quand le coach fait pousser. Pense à noter ta séance.'; btn='Noter ma séance'; go='stats'; }
   else { t='Vélo tranquille'; p='1 h à 1 h 15 en zone 2 (112–129 bpm), sur le vélo d\u2019appartement ou en VTT. En intérieur, choisis le mode libre plutôt qu\u2019un parcours avec des côtes.'; btn='Noter ma séance'; go='stats'; }
