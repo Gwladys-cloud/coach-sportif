@@ -136,6 +136,13 @@ h2{flex-wrap:wrap;row-gap:2px}
 .vl{display:grid;grid-template-columns:38px 1fr;gap:8px;align-items:baseline;margin:0}
 .vlab{font-family:var(--display);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 .vl-mar .vlab{color:var(--accent)}
+button.vday{font:inherit;color:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button.vday[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+button.vday:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.vtools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.btn-ghost{font:600 .9rem var(--body);color:var(--accent);background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:8px 12px;cursor:pointer}
+#weeks[data-filter="mar"] .vl:not(.vl-mar),#weeks[data-filter="jeu"] .vl:not(.vl-jeu),#weeks[data-filter="dim"] .vl:not(.vl-dim){display:none}
+.wk{scroll-margin-top:80px}
 .vweek{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .vday{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
 .vday.key{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
@@ -262,11 +269,12 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <section data-tab="velo">
   <h2>Ta semaine vélo <small>3 séances</small></h2>
   <div class="vweek">
-    <div class="vday key"><span class="vd">Mardi</span><b>Séance clé</b><span>Le contenu change chaque semaine, voir ci-dessous. Vélo d'appartement.</span><span class="tag t-hard">Qualité</span></div>
-    <div class="vday"><span class="vd">Jeudi</span><b>30 à 40 min facile</b><span>Facultatif. Facile ou récupération selon la semaine, voir ci-dessous.</span><span class="tag t-easy">Facile</span></div>
-    <div class="vday"><span class="vd">Dimanche</span><b>Sortie longue tranquille</b><span>Zone 2, en VTT ou vélo d'appartement. La durée augmente jusqu'à 1 h 30 mi-novembre, voir ci-dessous.</span><span class="tag t-easy">Endurance</span></div>
+    <button type="button" class="vday key" data-f="mar" aria-pressed="false"><span class="vd">Mardi</span><b>Séance clé</b><span>Le contenu change chaque semaine, voir ci-dessous. Vélo d'appartement.</span><span class="tag t-hard">Qualité</span></button>
+    <button type="button" class="vday" data-f="jeu" aria-pressed="false"><span class="vd">Jeudi</span><b>30 à 40 min facile</b><span>Facultatif. Facile ou récupération selon la semaine, voir ci-dessous.</span><span class="tag t-easy">Facile</span></button>
+    <button type="button" class="vday" data-f="dim" aria-pressed="false"><span class="vd">Dimanche</span><b>Sortie longue tranquille</b><span>Zone 2, en VTT ou vélo d'appartement. La durée augmente jusqu'à 1 h 30 mi-novembre, voir ci-dessous.</span><span class="tag t-easy">Endurance</span></button>
   </div>
   <p class="sub">Trop fatiguée ? Supprime d'abord la séance du jeudi. Ne saute pas celle du mardi.</p>
+  <div class="vtools"><span class="sub" id="vfilter-msg">Touche une carte pour ne voir que ce jour-là.</span><button type="button" class="btn-ghost" id="goto-week">Aller à cette semaine ↓</button></div>
 
   <h2>Semaine par semaine <small>mardi · jeudi · dimanche</small></h2>
   <div class="weeks" id="weeks">
@@ -790,6 +798,21 @@ render();
   el.querySelector('h3').textContent=t; el.querySelector('p').innerHTML=p;
   if(btn){ var b=el.querySelector('button'); b.textContent=btn; b.addEventListener('click',function(){ if(window.__showTab) window.__showTab(go); if(go==='stats') setTimeout(function(){var c=document.getElementById('add-card'); if(c) c.scrollIntoView({behavior:'smooth'});},100); }); }
   el.hidden=false;
+})();
+</script>
+<script>
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('button.vday')), weeks=document.getElementById('weeks'), msg=document.getElementById('vfilter-msg');
+  var NAMES={mar:'les mardis',jeu:'les jeudis',dim:'les dimanches'};
+  cards.forEach(function(c){ c.addEventListener('click',function(){
+    var on=c.getAttribute('aria-pressed')!=='true';
+    cards.forEach(function(x){x.setAttribute('aria-pressed','false');});
+    if(on){ c.setAttribute('aria-pressed','true'); weeks.dataset.filter=c.dataset.f; msg.textContent='Seulement '+NAMES[c.dataset.f]+'. Touche à nouveau la carte pour tout voir.'; }
+    else { delete weeks.dataset.filter; msg.textContent='Touche une carte pour ne voir que ce jour-là.'; }
+  }); });
+  var g=document.getElementById('goto-week');
+  g.addEventListener('click',function(){ var w=document.querySelector('#weeks .wk.now'); if(w) w.scrollIntoView({behavior:'smooth',block:'start'}); });
+  if(!document.querySelector('#weeks .wk.now')) g.hidden=true;
 })();
 </script>
 <script>setTimeout(function(){if(window.__statsReady)return;var e=document.getElementById('stats-status');if(e)e.textContent="Impossible de charger tes séances pour l'instant. Vérifie ta connexion internet, puis recharge la page.";},12000);</script>
