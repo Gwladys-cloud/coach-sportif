@@ -95,6 +95,40 @@ function render(){
   }).join("") : `<tr><td colspan="7" class="sub">Aucune séance pour l'instant : ajoute la première avec le formulaire.</td></tr>`;
 }
 
+
+function renderToday(){
+  const el=document.getElementById("today"); if(!el) return;
+  const today=isoToday(); const done=sessions.filter(s=>s.date===today);
+  if(!done.length) return;
+  const asc=[...sessions].sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0), bl=bilans(asc);
+  const s=done[done.length-1], b=bl[s.id]||{t:""};
+  const fc=s.fcMoy?(" · FC moyenne "+s.fcMoy+" bpm"):"";
+  const lines=[];
+  lines.push("<b>"+esc(TYPES[s.type]||"Séance")+"</b> : "+fmtDur(s.duree)+(s.dist?" · "+num(s.dist)+" km":"")+fc+(b.t?" · "+esc(b.t):"")+".");
+  const now=new Date(); const mon=new Date(now); mon.setHours(0,0,0,0); mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+  const monIso=new Date(mon.getTime()-mon.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  const week=asc.filter(x=>x.date>=monIso);
+  lines.push("Cette semaine : <b>"+week.length+" séance"+(week.length>1?"s":"")+"</b>, "+fmtDur(week.reduce((t,x)=>t+(+x.duree||0),0))+" d'entraînement.");
+  const first=asc[0]; const row=asc.filter(x=>x.type==="aviron"&&paceSec(x.allure)!=null);
+  let prog="Depuis le "+fmtDate(first.date)+" : <b>"+asc.length+" séances</b>";
+  const km=asc.filter(x=>x.type==="aviron").reduce((t,x)=>t+(+x.dist||0),0);
+  if(km) prog+=", "+num(km,0)+" km en bateau";
+  if(row.length>1){ const d=paceSec(row[0].allure)-paceSec(row[row.length-1].allure); if(d>0) prog+=", et ton allure en bateau est passée de "+esc(row[0].allure)+" à <b>"+esc(row[row.length-1].allure)+"</b> /500 m"; }
+  lines.push(prog+".");
+  const easy=asc.filter(x=>(x.type==="velo"||x.type==="vtt")&&x.fcMoy);
+  const okEasy=easy.filter(x=>(bl[x.id]||{}).c==="ok").length;
+  const race=new Date(2026,11,13); now.setHours(0,0,0,0); const dleft=Math.round((race-now)/86400000);
+  const cheers=["Chaque séance bien faite, c'est un peu plus de puissance dans le bateau le 13 décembre.","Tu construis ton moteur séance après séance : continue comme ça !","La régularité, c'est ce qui fait la différence. Tu es sur la bonne voie.","Ton équipe va sentir la différence. Bravo pour ta constance !"];
+  const cheer = (s.type==="velo"||s.type==="vtt") && b.c==="ok" && okEasy>1 ? "Déjà "+okEasy+" sorties vélo parfaitement maîtrisées en zone 2 (112–129 bpm) : tu as compris le principe !" : cheers[(new Date().getDate())%cheers.length];
+  lines.push(cheer+(dleft>0?" Plus que <b>"+dleft+" jours</b> avant la course.":""));
+  const NEXT=["Demain : repos.","Demain : vélo, ta séance clé de la semaine.","Demain : renfo.","Demain : vélo facile, facultatif.","Demain : repos. Prépare tes affaires pour l'aviron.","Demain : aviron avec l'équipe.","Demain : sortie vélo tranquille."];
+  const wd=now.getDay(); const nextTxt=NEXT[wd];
+  const JOURS=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+  el.dataset.done="1"; el.classList.add("done");
+  el.innerHTML='<span class="eyebrow">Aujourd\u2019hui · '+JOURS[wd]+" "+fmtDate(today)+'</span><h3>Bravo, séance faite ✓</h3>'+lines.map(l=>"<p>"+l+"</p>").join("")+'<p class="next">'+nextTxt+'</p><button type="button" id="today-stats">Voir mes stats</button>';
+  document.getElementById("today-stats").addEventListener("click",()=>{ if(window.__showTab) window.__showTab("stats"); });
+  el.hidden=false;
+}
 function showCode(msg){
   $("code-card").hidden=false; $("stats-body").hidden=true; $("stats-status").hidden=true;
   $("code-err").hidden=!msg; $("code-err").textContent=msg||"";
@@ -106,7 +140,7 @@ function connect(c){
   const col=collection(db,"espaces",code,"seances");
   unsub=onSnapshot(col, async (snap)=>{
     sessions=snap.docs.map(d=>({id:d.id,...d.data()}));
-    $("stats-status").hidden=true; $("stats-body").hidden=false; render(); if(window.__bkInfo) window.__bkInfo(); const fb=$("fab"), st=document.querySelector('section[data-tab="stats"]'); if(fb&&st) fb.hidden=st.hidden;
+    $("stats-status").hidden=true; $("stats-body").hidden=false; render(); renderToday(); if(window.__bkInfo) window.__bkInfo(); const fb=$("fab"), st=document.querySelector('section[data-tab="stats"]'); if(fb&&st) fb.hidden=st.hidden;
   }, (err)=>{
     store(false,null);
     showCode(err && err.code==="permission-denied" ? "Ce code ne fonctionne pas, ou la base n'est pas encore configurée. Vérifie-le et réessaie." : "Impossible de joindre la base pour l'instant. Vérifie ta connexion internet et réessaie.");
