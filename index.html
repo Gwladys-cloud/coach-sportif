@@ -152,6 +152,7 @@ button.vday:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .vday span:not(.vd):not(.tag){font-size:.88rem;color:var(--muted)}
 .vday .tag{align-self:flex-start;margin:4px 0 0}
 .sub{font-size:.88rem;color:var(--muted)}
+.tip{background:var(--hard-soft);border-radius:12px;padding:10px 12px;font-size:.9rem;line-height:1.45}
 .wsel{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
 .wsel::-webkit-scrollbar{display:none}
 .wsel button{flex:none;font:700 .95rem var(--display);min-width:46px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;position:relative}
@@ -298,7 +299,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
   <h2>Les 3 intensités</h2>
   <p style="font-size:.9rem;color:var(--muted)">Tes sensations passent avant la fréquence cardiaque. Les bpm restent un repère, pas une règle.</p>
   <div class="zones">
-    <div class="zone z-easy"><b>Facile · 112–129 bpm</b><span>Zone 2 Garmin (112–129 bpm). Tu tiens une conversation.</span></div>
+    <div class="zone z-easy"><b>Facile · 112–129 bpm</b><span>Zone 2 Garmin (112–129 bpm). Tu tiens une conversation. En vélo d'appartement : environ 15 km/h à une cadence de 85–90.</span></div>
     <div class="zone z-hard"><b>Dur mais tenable · 145–155 bpm</b><span>Haut de zone 3 (130–148 bpm), début de zone 4 (149–166 bpm). Phrases courtes seulement.</span></div>
     <div class="zone z-race"><b>Allure course · 155–165 bpm</b><span>Zone 4 Garmin (155–165 bpm). Quelques mots seulement.</span></div>
   </div>
@@ -307,6 +308,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <section data-tab="velo">
   <h2>Vélo prépa <small>3 séances par semaine</small></h2>
 
+  <div class="tip"><b>Repère pour les sorties faciles</b> : environ <b>15 km/h à une cadence de 85–90</b>, en réglant la résistance. Avec le propranolol, tes bpm peuvent rester bas même si l'effort est trop fort : si tes jambes brûlent ou deviennent lourdes, <b>baisse la résistance</b>, même en zone 2 (112–129 bpm).</div>
   <div class="wsel" role="tablist" aria-label="Choisir une semaine" id="wsel"></div>
   <div class="whead">
     <div><span class="wphase" id="wphase"></span><h3 id="wtitle"></h3></div>
@@ -825,11 +827,11 @@ render();
     jeu:{t:'Facile',opt:1,s:[EC,[25,'z2','Endurance'],RC]},
     dim:{t:'Sortie longue',s:[EC,[50,'z2','Endurance'],RC]}},
    {n:2,start:'2026-10-19',d:'19 – 25 oct',ph:'Base · construire le moteur',
-    mar:{t:'Endurance',s:[EC,[55,'z2','Endurance, cadence 85–90'],RC]},
+    mar:{t:'Endurance',s:[EC,[55,'z2','Endurance, cadence 85–90, environ 15 km/h'],RC]},
     jeu:{t:'Facile',opt:1,s:[EC,[25,'z2','Endurance'],RC],x:'Bonus en plus (10 min) : 3 × 15 rowing penché + 2 × 40 s de gainage.'},
-    dim:{t:'Sortie longue',s:[EC,[60,'z2','Endurance, mode libre'],RC]}},
+    dim:{t:'Sortie longue',s:[EC,[60,'z2','Endurance, mode libre, environ 15 km/h'],RC]}},
    {n:3,start:'2026-10-26',d:'26 oct – 1 nov',ph:'Base · construire le moteur',
-    mar:{t:'Endurance',s:[EC,[60,'z2','Endurance, cadence 85–90'],RC]},
+    mar:{t:'Endurance',s:[EC,[60,'z2','Endurance, cadence 85–90, environ 15 km/h'],RC]},
     jeu:{t:'Facile',opt:1,s:[EC,[25,'z2','Endurance'],RC],x:'Bonus en plus (10 min) : 3 × 15 rowing penché + 2 × 40 s de gainage.'},
     dim:{t:'Sortie longue',s:[EC,[55,'z2','Endurance'],[5,'z2','Cadence 95–100, résistance légère'],RC]}},
    {n:4,start:'2026-11-02',d:'2 – 8 nov',ph:'Seuil · monter en intensité',
