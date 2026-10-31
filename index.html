@@ -195,15 +195,15 @@ button.vday:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .bk-alert{background:var(--hard-soft);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:.9rem;margin:0}
 #backup-card{scroll-margin-top:72px}
 .fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:21;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent);color:var(--bg);font-size:2rem;line-height:1;box-shadow:0 8px 20px rgba(11,122,131,.35);cursor:pointer}
-.progsel{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.progsel button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
-.progsel button b{font-family:var(--display);font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em}
-.progsel button span{font-size:.8rem;color:var(--muted)}
+.progsel{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.progsel button{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 9px;cursor:pointer;min-width:0}
+.progsel button b{font-family:var(--display);font-size:.92rem;line-height:1.1;overflow-wrap:anywhere;text-transform:uppercase;letter-spacing:.02em}
+.progsel button span{font-size:.74rem;line-height:1.25;color:var(--muted)}
 .progsel button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .progsel button[aria-selected="true"] span{color:var(--bg);opacity:.9}
 .prog{display:flex;flex-direction:column;gap:14px}
 .timer{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;--ph:var(--accent)}
-.timer[data-phase="work"]{--ph:var(--race)} .timer[data-phase="warm"]{--ph:var(--hard)} .timer[data-phase="prep"]{--ph:var(--easy)} .timer[data-phase="rest"]{--ph:var(--easy)} .timer[data-phase="long"]{--ph:var(--easy)} .timer[data-phase="done"]{--ph:var(--accent)}
+.timer[data-phase="work"]{--ph:var(--race)} .timer[data-prog="etire"][data-phase="work"]{--ph:var(--easy)} .timer[data-phase="warm"]{--ph:var(--hard)} .timer[data-phase="prep"]{--ph:var(--easy)} .timer[data-phase="rest"]{--ph:var(--easy)} .timer[data-phase="long"]{--ph:var(--easy)} .timer[data-phase="done"]{--ph:var(--accent)}
 .t-main{position:relative;width:150px;height:150px;flex:none;margin-inline:auto}
 .ring{width:100%;height:100%;transform:rotate(-90deg)}
 .ring-bg{fill:none;stroke:var(--mat);stroke-width:10}
@@ -350,7 +350,8 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
   <h2>Renfo <small id="prog-sub">circuit complet · 30 min</small></h2>
   <div class="progsel" role="tablist" aria-label="Choisir une routine">
     <button type="button" data-p="circuit" aria-selected="true"><b>Circuit complet</b><span>30 min · si tu rates le club</span></button>
-    <button type="button" data-p="tronc" aria-selected="false"><b>Tronc solide</b><span>15 min · abdos, gainage, élastique</span></button>
+    <button type="button" data-p="tronc" aria-selected="false"><b>Tronc solide</b><span>15 min · abdos, gainage</span></button>
+    <button type="button" data-p="etire" aria-selected="false"><b>Étirements</b><span>8 min · tous les jours</span></button>
   </div>
 
   <div class="prog" data-prog="circuit">
@@ -392,6 +393,15 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
   <p class="tip">Encore des courbatures aux abdos après le club ? Fais seulement les exercices à l'élastique (1 et 4), sur 2 tours.</p>
   </div>
 
+  <div class="prog" data-prog="etire" hidden>
+  <div class="rules">
+    <span class="rule"><b>Quand</b> tous les jours, surtout après le sport ou le soir</span>
+    <span class="rule"><b>Matériel</b> tapis</span>
+    <span class="rule"><b>Format</b> 7 étirements de 1 min, 30 s par côté quand il y a deux côtés</span>
+  </div>
+  <p class="tip">Étire-toi sans douleur : une tension agréable, jamais une douleur. Respire lentement et relâche un peu plus à chaque expiration.</p>
+  </div>
+
   <div class="timer" id="timer" data-phase="idle">
     <div class="t-main">
       <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
@@ -414,7 +424,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
       </div>
       <div class="t-opts">
         <label id="t-rounds-wrap">Tours <select id="t-rounds"><option value="3" selected>3 (forme)</option><option value="2">2 (soir fatigué)</option></select></label>
-        <label><input type="checkbox" id="t-warm" checked> Échauffement (<span id="t-warm-d">5 min</span>)</label>
+        <label id="t-warm-wrap"><input type="checkbox" id="t-warm" checked> Échauffement (<span id="t-warm-d">5 min</span>)</label>
         <label><input type="checkbox" id="t-voice" checked> Voix d'encouragement</label>
         <label><input type="checkbox" id="t-beep" checked> Bips 3-2-1</label>
       </div>
@@ -585,6 +595,74 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
     </ul>
   </div>
   </div>
+
+  <div class="prog" data-prog="etire" hidden>
+  <div class="ex-grid">
+    <article class="ex">
+      <svg class="fig" data-ex="lowlunge" viewBox="0 0 160 100" role="img" aria-label="Personne en fente basse, genou arrière au sol, bassin qui avance"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">1</span> Fente basse</h3><span class="reps">30 s / côté</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Genou arrière posé sur le tapis, pied avant bien devant. Avance doucement le bassin, buste droit, sans cambrer.</p>
+        <span class="why">Devant des hanches, très sollicité en aviron</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="hamseat" viewBox="0 0 160 100" role="img" aria-label="Personne assise jambes tendues qui penche le buste vers ses pieds"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">2</span> Ischios assise</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Assise, jambes tendues. Penche le buste vers tes pieds en gardant le dos le plus droit possible. Pas besoin de toucher tes pieds.</p>
+        <span class="why">Arrière des cuisses, pour bien te pencher à l'attaque</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="cobra" viewBox="0 0 160 100" role="img" aria-label="Personne allongée sur le ventre qui pousse sur ses mains pour soulever le buste"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">3</span> Étirement des abdos</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Allongée sur le ventre, mains sous les épaules. Pousse sur tes mains pour soulever le buste, bassin au sol, épaules basses.</p>
+        <span class="why">Détend les abdos après le gainage</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="child" viewBox="0 0 160 100" role="img" aria-label="Personne à genoux, assise sur les talons, buste et bras allongés vers l'avant au sol"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">4</span> Posture de l'enfant</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>À genoux, assise sur les talons, allonge le buste et les bras devant toi sur le tapis. Relâche le dos et respire dans le bas du dos.</p>
+        <span class="why">Bas du dos</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="thoracic" viewBox="0 0 160 100" role="img" aria-label="Personne à quatre pattes qui ouvre un bras vers le plafond"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">5</span> Rotation à quatre pattes</h3><span class="reps">30 s / côté</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>À quatre pattes, une main derrière la tête. Ouvre le coude vers le plafond en tournant le buste, puis referme. Lentement.</p>
+        <span class="why">Mobilité du haut du dos</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="fig4" viewBox="0 0 160 100" role="img" aria-label="Personne sur le dos, une cheville posée sur le genou opposé, qui tire la jambe vers la poitrine"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">6</span> Fessiers allongée</h3><span class="reps">30 s / côté</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Sur le dos, pose une cheville sur le genou opposé. Attrape la cuisse de la jambe d'appui et ramène-la doucement vers toi.</p>
+        <span class="why">Fessiers et hanches</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="shoulder" viewBox="0 0 160 100" role="img" aria-label="Personne debout qui tire un bras tendu devant sa poitrine"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">7</span> Épaules</h3><span class="reps">30 s / côté</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Debout, passe un bras tendu devant ta poitrine et rapproche-le avec l'autre main, épaule basse.</p>
+        <span class="why">Épaules, après la rame</span>
+      </div>
+    </article>
+  </div>
+  </div>
 </section>
 
 <section data-tab="jourj">
@@ -731,6 +809,20 @@ var P={
        b:{H:[26,50],N:[38,57],P:[88,73],K1:[114,78],F1:[140,82],E1:[38,82],W1:[58,82],E2:[40,42],W2:[42,28]},hold:true},
  birddog:{a:{H:[112,44],N:[100,52],P:[60,52],K1:[60,82],F1:[36,84],K2:[60,82],F2:[36,84],E1:[100,67],W1:[100,82],E2:[100,67],W2:[100,82]},
           b:{H:[114,44],N:[100,52],P:[60,52],K1:[60,82],F1:[36,84],K2:[40,54],F2:[18,54],E1:[118,50],W1:[136,48],E2:[100,67],W2:[100,82]}},
+ lowlunge:{a:{H:[82,22],N:[81,33],P:[78,62],K1:[100,62],F1:[102,84],K2:[58,82],F2:[34,84],E1:[86,48],W1:[98,58]},
+           b:{H:[88,24],N:[86,35],P:[84,66],K1:[104,62],F1:[102,84],K2:[60,82],F2:[34,84],E1:[92,50],W1:[102,58]}},
+ hamseat:{a:{H:[54,37],N:[52,48],P:[50,80],K1:[89,80],F1:[128,80],E1:[62,62],W1:[76,72]},
+          b:{H:[92,54],N:[80,60],P:[50,80],K1:[89,80],F1:[128,80],E1:[98,68],W1:[116,74]}},
+ cobra:{a:{H:[120,76],N:[106,79],P:[70,80],K1:[42,82],F1:[16,82],E1:[100,70],W1:[112,82]},
+        b:{H:[118,46],N:[106,56],P:[72,80],K1:[42,82],F1:[16,82],E1:[107,69],W1:[108,82]}},
+ child:{a:{H:[106,74],N:[94,72],P:[54,68],K1:[68,82],F1:[42,84],E1:[118,80],W1:[136,82]},
+        b:{H:[108,76],N:[96,74],P:[52,70],K1:[68,82],F1:[42,84],E1:[120,81],W1:[138,82]},hold:true},
+ thoracic:{a:{H:[112,46],N:[100,52],P:[60,52],K1:[60,82],F1:[36,84],E1:[100,67],W1:[100,82],E2:[110,46],W2:[112,40]},
+           b:{H:[112,44],N:[100,52],P:[60,52],K1:[60,82],F1:[36,84],E1:[100,67],W1:[100,82],E2:[98,32],W2:[104,18]}},
+ fig4:{a:{H:[20,75],N:[32,80],P:[66,80],K1:[84,62],F1:[98,82],K2:[92,54],F2:[80,64],E1:[48,82],W1:[62,82]},
+       b:{H:[20,75],N:[32,80],P:[66,80],K1:[78,54],F1:[94,62],K2:[86,44],F2:[74,56],E1:[52,66],W1:[72,58]}},
+ shoulder:{a:{H:[80,15],N:[80,26],P:[80,56],K1:[75,70],F1:[72,84],K2:[85,70],F2:[88,84],E1:[94,32],W1:[110,32],E2:[90,42],W2:[96,34]},
+           b:{H:[80,15],N:[80,26],P:[80,56],K1:[75,70],F1:[72,84],K2:[85,70],F2:[88,84],E1:[94,32],W1:[110,32],E2:[90,42],W2:[96,34]},hold:true,front:true},
  deadbug:{a:{H:[30,74],N:[42,78],P:[84,78],K1:[84,56],F1:[104,56],K2:[84,56],F2:[104,56],E1:[42,62],W1:[42,46],E2:[42,62],W2:[42,46]},
           b:{H:[30,74],N:[42,78],P:[84,78],K1:[84,56],F1:[104,56],K2:[108,72],F2:[134,72],E1:[42,62],W1:[42,46],E2:[28,72],W2:[12,70]}}
 };
@@ -832,7 +924,12 @@ var PROGS={
   KITSAY:['avec le grand élastique','pose l\u2019élastique, prends les deux haltères','un seul haltère','avec les deux haltères','pose les haltères, prends le grand élastique','pose l\u2019élastique, sans matériel','sans matériel','sans matériel'],
   cues:['Jambes tendues, tire vers le nombril, serre les omoplates.','Descends lentement, fesses en arrière, dos droit.','Penche-toi en balance, dos plat, jambe tendue derrière.','Recule une jambe, genou près du sol, buste droit.','Bras tendus à hauteur d\u2019épaules, écarte jusqu\u2019à la poitrine.','Monte le bassin et serre les fessiers.','Corps bien aligné, respire calmement.','Bas du dos collé au sol, bras et jambe opposés.'],
   WU:null},
- tronc:{label:'routine',sub:'tronc solide · 15 min',WORK:40,REST:20,LONG:20,ROUNDS:2,WUD:40,warmTxt:'2 min',
+ etire:{label:'étirements',sub:'étirements · 8 min',WORK:60,REST:5,LONG:5,ROUNDS:1,WUD:0,warmTxt:'',cool:null,calm:true,sides:[0,4,5,6],workLabel:'Étire',
+  KIT:[['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel']],
+  KITSAY:['','','','','','',''],
+  cues:['Genou arrière au sol, avance doucement le bassin. Côté droit d\u2019abord.','Jambes tendues, penche le buste, dos droit.','Sur le ventre, pousse sur tes mains, bassin au sol.','Assise sur les talons, allonge les bras devant toi et relâche.','Main derrière la tête, ouvre le coude vers le plafond. Côté droit d\u2019abord.','Cheville sur le genou opposé, ramène la jambe vers toi. Côté droit d\u2019abord.','Bras tendu devant la poitrine, épaule basse. Bras droit d\u2019abord.'],
+  WU:[]},
+ tronc:{label:'routine',sides:[4],sub:'tronc solide · 15 min',WORK:40,REST:20,LONG:20,ROUNDS:2,WUD:40,warmTxt:'2 min',
   cool:{d:60,name:'Étirement des abdos',cue:'Allongée sur le ventre, pousse sur tes mains pour soulever le buste. Respire calmement.'},
   KIT:[['band','Grand élastique'],['none','Sans matériel'],['none','Sans matériel'],['band','Grand élastique'],['none','Sans matériel'],['none','Sans matériel']],
   KITSAY:['avec le grand élastique','pose l\u2019élastique, sans matériel','sans matériel','reprends le grand élastique','pose l\u2019élastique, sans matériel','sans matériel'],
@@ -849,12 +946,12 @@ function setProg(p){
  WORK=PR.WORK; REST=PR.REST; LONG=PR.LONG; WUD=PR.WUD; WU=PR.WU; KIT=PR.KIT; KITSAY=PR.KITSAY; cues=PR.cues; COOL=PR.cool;
  ROUNDS = PNAME==='circuit' ? (+$('t-rounds').value||3) : PR.ROUNDS;
  $('t-rounds-wrap').hidden = PNAME!=='circuit';
- $('t-warm-d').textContent=PR.warmTxt;
+ $('t-warm-d').textContent=PR.warmTxt; $('t-warm-wrap').hidden=!(PR.WU&&PR.WU.length); root.dataset.prog=PNAME;
 }
 var seq=[];
 function buildSeq(){
  seq=[];
- if($('t-warm')&&$('t-warm').checked){WU.forEach(function(w,i){seq.push({t:'warm',d:WUD,w:i});});seq.push({t:'prep',d:15,r:0,e:-1});}
+ if(WU&&WU.length&&$('t-warm')&&$('t-warm').checked){WU.forEach(function(w,i){seq.push({t:'warm',d:WUD,w:i});});seq.push({t:'prep',d:15,r:0,e:-1});}
  for(var r=0;r<ROUNDS;r++)for(var e=0;e<N;e++){
   seq.push({t:'work',d:WORK,r:r,e:e});
   if(!(r===ROUNDS-1&&e===N-1))seq.push(e===N-1?{t:'long',d:LONG,r:r,e:e}:{t:'rest',d:REST,r:r,e:e});
@@ -894,29 +991,29 @@ function render(){
  var s=seq[idx],ph=s?s.t:'done';
  root.dataset.phase=running||ph==='done'?ph:(idx===0&&left===seq[0].d?'idle':ph);
  var labels={warm:'Échauffement',prep:'Prépare-toi',work:'Sport',rest:'Repos',long:'Pause',cool:'Étirement',done:'Terminé'};
- $('t-phase').textContent=root.dataset.phase==='idle'?'Prête ?':labels[ph];
+ $('t-phase').textContent=root.dataset.phase==='idle'?'Prête ?':(ph==='work'&&PR.workLabel?PR.workLabel:labels[ph]);
  $('t-sec').textContent=ph==='done'?'✓':Math.ceil(left);
  var frac=ph==='done'?1:1-left/s.d; ring.style.strokeDashoffset=(C*frac).toFixed(1);
- if(ph==='done'){var k0=$('t-kit');if(k0)k0.hidden=true;$('t-ex').textContent=PNAME==='tronc'?'Bravo, routine terminée !':'Bravo, circuit terminé !';$('t-meta').textContent=ROUNDS+' tours faits.'+(COOL?'':' Place aux étirements.');cards.forEach(function(c){c.classList.remove('live');});}
+ if(ph==='done'){var k0=$('t-kit');if(k0)k0.hidden=true;$('t-ex').textContent=PNAME==='tronc'?'Bravo, routine terminée !':(PNAME==='etire'?'Bravo, étirements terminés !':'Bravo, circuit terminé !');$('t-meta').textContent=PNAME==='etire'?'Ton corps te remercie.':ROUNDS+' tours faits.'+(COOL?'':' Place aux étirements.');cards.forEach(function(c){c.classList.remove('live');});}
  else if(ph==='cool'){$('t-ex').textContent=COOL.name;var kc=$('t-kit');if(kc){kc.className='kit kit-none';kc.textContent='Sans matériel';kc.hidden=false;}$('t-meta').textContent='Retour au calme · 1 min';cards.forEach(function(c){c.classList.remove('live');});}
  else if(ph==='warm'){$('t-ex').textContent=(s.w+1)+'. '+WU[s.w][0];var kw=$('t-kit');if(kw){kw.className='kit kit-none';kw.textContent='Sans matériel';kw.hidden=false;}$('t-meta').textContent='Échauffement · '+(s.w+1)+' / '+WU.length+' · '+WUD+' s chacun';cards.forEach(function(c){c.classList.remove('live');});}
  else{var ne=s.t==='work'?s.e:(s.e+1)%N,nr=s.t==='work'?s.r:(s.e===N-1?s.r+1:s.r);
   $('t-ex').textContent=(s.t==='work'?'':'Prochain : ')+(ne+1)+'. '+names[ne];
   var kk=$('t-kit');if(kk){kk.className='kit kit-'+KIT[ne][0];kk.textContent=KIT[ne][1];kk.hidden=false;}
-  $('t-meta').textContent='Tour '+(nr+1)+' / '+ROUNDS+' · Exercice '+(ne+1)+' / '+N+' · '+WORK+' s sport, '+REST+' s repos';
+  $('t-meta').textContent=(ROUNDS>1?'Tour '+(nr+1)+' / '+ROUNDS+' · ':'')+(PNAME==='etire'?'Étirement ':'Exercice ')+(ne+1)+' / '+N+' · '+(PNAME==='etire'?'1 min chacun':WORK+' s sport, '+REST+' s repos');
   cards.forEach(function(c,i){c.classList.toggle('live',running&&s.t==='work'&&i===s.e);});}
  $('t-start').textContent=running?'Pause':(ph==='done'?'Terminé':(idx===0&&left===seq[0].d?'Démarrer':'Reprendre'));
 }
 function enter(i){
  idx=i;spokeMid=spoke10=false;beeped={};
  var s=seq[idx];
- if(!s){running=false;clearInterval(timerId);wake(false);beep(880,.6);say(PNAME==='tronc'?'Bravo ! Routine terminée. Ton tronc te remercie.':'Bravo ! Circuit terminé. Tu as tout donné. Place aux étirements.');try{audio.pause();}catch(e){}render();return;}
+ if(!s){running=false;clearInterval(timerId);wake(false);beep(880,.6);say(PNAME==='etire'?'Bravo, étirements terminés. Bonne récupération !':PNAME==='tronc'?'Bravo ! Routine terminée. Ton tronc te remercie.':'Bravo ! Circuit terminé. Tu as tout donné. Place aux étirements.');try{audio.pause();}catch(e){}render();return;}
  left=s.d;
  if(s.t==='warm'){beep(1046,.35);say((s.w===0?'On commence par l\u2019échauffement. ':'')+WU[s.w][0]+'. '+WU[s.w][1]);}
- else if(s.t==='prep'){beep(660,.3);say('Échauffement terminé ! Prépare-toi : '+names[0]+', '+KITSAY[0]+'.');}
+ else if(s.t==='prep'){beep(660,.3);say('Échauffement terminé ! Prépare-toi : '+names[0]+(KITSAY[0]?', '+KITSAY[0]:'')+'.');}
  else if(s.t==='cool'){beep(660,.3);say('Dernière minute : '+COOL.name+'. '+COOL.cue);}
- else if(s.t==='work'){beep(1046,.35);say((s.r===0&&s.e===0?'C’est parti ! ':'Go ! ')+names[s.e]+'. '+(cues[s.e]||''));}
- else if(s.t==='rest'){beep(660,.3);var ni=(s.e+1)%N;say('Repos. Prochain : '+names[ni]+', '+KITSAY[ni]+'.');}
+ else if(s.t==='work'){beep(1046,.35);say((s.r===0&&s.e===0?(PNAME==='etire'?'On s\u2019étire. ':'C’est parti ! '):(PNAME==='etire'?'':'Go ! '))+names[s.e]+'. '+(cues[s.e]||''));}
+ else if(s.t==='rest'){beep(660,.3);var ni=(s.e+1)%N;say((PNAME==='etire'?'Ensuite : ':'Repos. Prochain : ')+names[ni]+(KITSAY[ni]?', '+KITSAY[ni]:'')+'.');}
  else{beep(660,.3);say('Tour '+(s.r+1)+' terminé, bravo ! '+(LONG>=60?'Une minute de pause, bois un peu d\u2019eau. ':'Petite pause. ')+'Ensuite : '+names[0]+', '+KITSAY[0]+'.');}
  render();
 }
@@ -924,8 +1021,8 @@ function tick(){
  var now=performance.now(),dt=(now-last)/1000;last=now;left-=dt;
  var s=seq[idx];
  if(s.t==='work'){
-  if(!spokeMid&&left<=WORK/2){spokeMid=true;say(PNAME==='tronc'&&s.e===4?'Change de côté !':cheers[Math.floor(Math.random()*cheers.length)]);}
-  if(!spoke10&&left<=10.5&&left>9){spoke10=true;say('Plus que dix secondes !');}
+  if(!spokeMid&&left<=WORK/2){spokeMid=true;say(PR.sides&&PR.sides.indexOf(s.e)>=0?'Change de côté !':(PR.calm?'Respire lentement, relâche un peu plus.':cheers[Math.floor(Math.random()*cheers.length)]));}
+  if(!spoke10&&!PR.calm&&left<=10.5&&left>9){spoke10=true;say('Plus que dix secondes !');}
  }
  var c=Math.ceil(left);
  if(c<=3&&c>=1&&!beeped[c]){beeped[c]=1;beep(784,.15);}
@@ -1065,12 +1162,12 @@ render();
   if(d<0){ t='Course terminée 🎉'; p='Bravo pour ta course ! Raconte-moi comment ça s\u2019est passé.'; }
   else if(d===0){ t='Jour de course !'; p='5 km sur la Saône. Suis ton déroulé : échauffement, remontée facile, puis tout donner.'; btn='Voir le jour J'; go='jourj'; }
   else if(iso==='2026-12-12'){ t='Aviron · séance courte'; p='Quelques accélérations avec l\u2019équipe, sans te fatiguer. Pas de vélo ce week-end.'; }
-  else if(iso==='2026-12-09'){ t='Mobilité seulement'; p='15 min d\u2019étirements doux. Pas de renfo cette semaine : tu arrives fraîche dimanche.'; }
-  else if(wd===1){ t='Repos'; p='15 min d\u2019étirements si tu as envie. Ton corps assimile le travail du week-end.'; }
+  else if(iso==='2026-12-09'){ t='Mobilité seulement'; p='Les étirements doux, sans forcer. Pas de renfo cette semaine : tu arrives fraîche dimanche.'; btn='Ouvrir les étirements'; go='circuit'; prog='etire'; }
+  else if(wd===1){ t='Repos'; p='8 min d\u2019étirements si tu as envie. Ton corps assimile le travail du week-end.'; btn='Ouvrir les étirements'; go='circuit'; prog='etire'; }
   else if(wd===2){ t='Vélo · '+(VW?VW.mar.t.toLowerCase():'séance clé'); p=vtxt('mar')||'Séance clé de la semaine, voir l\u2019onglet Vélo.'; btn='Voir la séance'; go='velo'; }
   else if(wd===3){ var light=iso>='2026-11-16'&&iso<='2026-11-22'; t='Renfo'+(iso>='2026-10-28'?' au club':''); p=(light?'Semaine allégée : renfo à moitié. ':'')+(iso>='2026-10-28'?'Si tu ne peux pas aller au club, fais le circuit maison.':'Circuit maison avec le chrono.'); btn='Ouvrir le circuit'; go='circuit'; prog='circuit'; }
   else if(wd===4){ t='Vélo · '+(VW?VW.jeu.t.toLowerCase():'facile')+' (facultatif) + Tronc solide'; p=(vtxt('jeu')||'40 min faciles en zone 2 (112–129 bpm).')+' Et la routine « Tronc solide » de 15 min. Saute ce que tu veux si tu es fatiguée.'; btn='Ouvrir Tronc solide'; go='circuit'; prog='tronc'; }
-  else if(wd===5){ t='Repos'; p='Prépare tes affaires pour l\u2019aviron de demain.'; }
+  else if(wd===5){ t='Repos'; p='Prépare tes affaires pour l\u2019aviron de demain. 8 min d\u2019étirements si tu as envie.'; btn='Ouvrir les étirements'; go='circuit'; prog='etire'; }
   else if(wd===6){ t='Aviron avec l\u2019équipe'; p='Échauffe-toi 10 min à terre, et donne-toi à fond quand le coach fait pousser. Pense à noter ta séance.'; btn='Noter ma séance'; go='stats'; }
   else { t='Vélo · '+(VW?VW.dim.t.toLowerCase():'sortie longue'); p=(vtxt('dim')||'1 h à 1 h 15 en zone 2 (112–129 bpm).')+' Vélo d\u2019appartement ou VTT, en mode libre.'; btn='Noter ma séance'; go='stats'; }
   el.innerHTML='<span class="eyebrow">Aujourd\u2019hui · '+JOURS[wd]+' '+now.getDate()+' '+MOIS[now.getMonth()]+'</span><h3></h3><p></p>'+(btn?'<button type="button"></button>':'');
