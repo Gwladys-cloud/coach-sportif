@@ -195,7 +195,7 @@ button.vday:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .bk-alert{background:var(--hard-soft);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:.9rem;margin:0}
 #backup-card{scroll-margin-top:72px}
 .fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:21;width:56px;height:56px;border-radius:50%;border:none;background:var(--accent);color:var(--bg);font-size:2rem;line-height:1;box-shadow:0 8px 20px rgba(11,122,131,.35);cursor:pointer}
-.progsel{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.progsel{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 .progsel button{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 9px;cursor:pointer;min-width:0}
 .progsel button b{font-family:var(--display);font-size:.92rem;line-height:1.1;overflow-wrap:anywhere;text-transform:uppercase;letter-spacing:.02em}
 .progsel button span{font-size:.74rem;line-height:1.25;color:var(--muted)}
@@ -352,6 +352,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
     <button type="button" data-p="circuit" aria-selected="true"><b>Circuit complet</b><span>30 min · si tu rates le club</span></button>
     <button type="button" data-p="tronc" aria-selected="false"><b>Tronc solide</b><span>15 min · dos, gainage</span></button>
     <button type="button" data-p="etire" aria-selected="false"><b>Étirements</b><span>8 min · tous les jours</span></button>
+    <button type="button" data-p="aviron" aria-selected="false"><b>Avant l'aviron</b><span>5 min · à terre, avant le bateau</span></button>
   </div>
 
   <div class="prog" data-prog="circuit">
@@ -400,6 +401,15 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
     <span class="rule"><b>Format</b> 7 étirements de 1 min, 30 s par côté quand il y a deux côtés</span>
   </div>
   <p class="tip">Étire-toi sans douleur : une tension agréable, jamais une douleur. Respire lentement et relâche un peu plus à chaque expiration.</p>
+  </div>
+
+  <div class="prog" data-prog="aviron" hidden>
+  <div class="rules">
+    <span class="rule"><b>Quand</b> à terre, juste avant de monter dans le bateau</span>
+    <span class="rule"><b>Matériel</b> aucun</span>
+    <span class="rule"><b>Format</b> 5 mouvements de 1 min, en douceur</span>
+  </div>
+  <p class="tip">Le but : assouplir chevilles, hanches et arrière des cuisses pour aller chercher <b>loin devant à l'attaque</b> dès la première longueur. Sur l'eau, commence par des demi-coulisses si l'entraîneur le propose.</p>
   </div>
 
   <div class="timer" id="timer" data-phase="idle">
@@ -575,6 +585,56 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
     <ul>
       <li>Assise jambes tendues, penche le buste vers tes pieds, dos droit, pour étirer l'arrière des cuisses. Respire, 2 × 20 s.</li>
     </ul>
+  </div>
+  </div>
+
+  <div class="prog" data-prog="aviron" hidden>
+  <div class="ex-grid">
+    <article class="ex">
+      <svg class="fig" data-ex="deepsquat" viewBox="0 0 160 100" role="img" aria-label="Personne accroupie profondément, talons au sol, bras devant"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">1</span> Accroupie profonde</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Descends le plus bas possible, talons au sol si tu peux, bras tendus devant pour l'équilibre. Tiens 30 s, remonte doucement, puis recommence.</p>
+        <span class="why">Chevilles et hanches : la position d'attaque</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="lungebw" viewBox="0 0 160 100" role="img" aria-label="Personne qui fait une fente vers l'avant, genou arrière près du sol"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">2</span> Fentes basses alternées</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Grand pas en avant, descends le genou arrière près du sol, buste droit. Reviens et change de jambe. Environ 6 de chaque côté.</p>
+        <span class="why">Hanches et cuisses</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="hinge" viewBox="0 0 160 100" role="img" aria-label="Personne debout qui penche le buste en avant dos plat, jambes presque tendues"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">3</span> Penché jambes tendues</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Genoux à peine fléchis, pousse les fesses en arrière et penche le buste, dos plat, bras qui pendent. Remonte. Environ 10 fois, en allant un peu plus loin à chaque fois.</p>
+        <span class="why">Arrière des cuisses</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="reach" viewBox="0 0 160 100" role="img" aria-label="Personne debout qui tend les bras loin devant en arrondissant le haut du dos"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">4</span> Bras loin devant</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>Bras tendus devant à hauteur d'épaules. Pousse les mains loin devant en arrondissant le haut du dos, puis reviens droite. Environ 10 fois.</p>
+        <span class="why">Comme aller chercher l'attaque</span>
+      </div>
+    </article>
+    <article class="ex">
+      <svg class="fig" data-ex="armcircle" viewBox="0 0 160 100" role="img" aria-label="Personne debout de face qui fait de grands cercles avec les bras"></svg>
+      <div class="info">
+        <div class="top"><h3><span class="num">5</span> Cercles de bras et rotations</h3><span class="reps">1 min</span></div>
+        <span class="kit kit-none">Sans matériel</span>
+        <p>30 s de grands cercles de bras, en avant puis en arrière. Puis 30 s de rotations du buste, pieds écartés.</p>
+        <span class="why">Épaules et dos prêts à ramer</span>
+      </div>
+    </article>
   </div>
   </div>
 
@@ -780,6 +840,16 @@ var P={
  sdl:{a:{H:[80,14],N:[80,25],P:[80,53],K1:[81,69],F1:[80,84],E1:[81,39],W1:[82,53]},
       b:{H:[108,36],N:[98,41],P:[72,53],K1:[79,69],F1:[80,84],E1:[99,55],W1:[99,68]},
       db:['W1']},
+ deepsquat:{a:{H:[89,30],N:[85,41],P:[74,71],K1:[100,61],F1:[86,84],E1:[99,47],W1:[114,46]},
+            b:{H:[89,33],N:[85,44],P:[74,74],K1:[100,62],F1:[86,84],E1:[99,50],W1:[114,49]}},
+ lungebw:{a:{H:[80,14],N:[80,25],P:[80,53],K1:[81,69],F1:[82,84],K2:[79,69],F2:[78,84],E1:[80,39],W1:[80,53]},
+          b:{H:[80,22],N:[80,33],P:[78,60],K1:[96,63],F1:[98,84],K2:[70,81],F2:[52,82],E1:[80,47],W1:[80,60]}},
+ hinge:{a:{H:[80,14],N:[80,25],P:[80,53],K1:[81,69],F1:[80,84],E1:[81,39],W1:[82,53]},
+        b:{H:[108,36],N:[98,41],P:[72,53],K1:[79,69],F1:[80,84],E1:[99,55],W1:[99,68]}},
+ reach:{a:{H:[80,15],N:[80,26],P:[80,56],K1:[80,70],F1:[80,84],E1:[94,28],W1:[108,30]},
+        b:{H:[91,22],N:[86,31],P:[80,56],K1:[80,70],F1:[80,84],E1:[103,33],W1:[121,35]}},
+ armcircle:{a:{H:[80,15],N:[80,26],P:[80,56],K1:[75,70],F1:[72,84],K2:[85,70],F2:[88,84],E1:[68,18],W1:[62,4],E2:[92,18],W2:[98,4]},
+            b:{H:[80,15],N:[80,26],P:[80,56],K1:[75,70],F1:[72,84],K2:[85,70],F2:[88,84],E1:[66,40],W1:[58,54],E2:[94,40],W2:[102,54]},front:true},
  lunge:{a:{H:[80,14],N:[80,25],P:[80,53],K1:[81,69],F1:[82,84],K2:[79,69],F2:[78,84],E1:[80,39],W1:[80,53]},
         b:{H:[80,22],N:[80,33],P:[78,60],K1:[96,63],F1:[98,84],K2:[70,81],F2:[52,82],E1:[80,47],W1:[80,60]},
         db:['W1']},
@@ -914,6 +984,11 @@ var PROGS={
   KITSAY:['','','','','','',''],
   cues:['Genou arrière au sol, avance doucement le bassin. Côté droit d\u2019abord.','Jambes tendues, penche le buste, dos droit.','Sur le ventre, pousse sur tes mains, bassin au sol.','Assise sur les talons, allonge les bras devant toi et relâche.','Main derrière la tête, ouvre le coude vers le plafond. Côté droit d\u2019abord.','Cheville sur le genou opposé, ramène la jambe vers toi. Côté droit d\u2019abord.','Bras tendu devant la poitrine, épaule basse. Bras droit d\u2019abord.'],
   WU:[]},
+ aviron:{label:'échauffement',sub:'avant l\u2019aviron · 5 min',WORK:60,REST:5,LONG:5,ROUNDS:1,WUD:0,warmTxt:'',cool:null,sides:[],workLabel:'Bouge',
+  KIT:[['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel'],['none','Sans matériel']],
+  KITSAY:['','','','',''],
+  cues:['Descends bas, talons au sol, bras devant. Tiens trente secondes puis recommence.','Grand pas en avant, genou arrière près du sol, change de jambe.','Fesses en arrière, dos plat, va un peu plus loin à chaque fois.','Pousse les mains loin devant en arrondissant le haut du dos.','Grands cercles de bras, puis rotations du buste à mi-temps.'],
+  WU:[]},
  tronc:{label:'routine',sides:[],sub:'tronc solide · 15 min',WORK:40,REST:20,LONG:20,ROUNDS:3,WUD:40,warmTxt:'2 min',
   cool:{d:60,name:'Étirement de l\u2019arrière des cuisses',cue:'Assise jambes tendues, penche le buste vers tes pieds, dos droit. Respire calmement.'},
   KIT:[['band','Grand élastique'],['db','2 haltères'],['band','Grand élastique'],['none','Sans matériel']],
@@ -979,7 +1054,7 @@ function render(){
  $('t-phase').textContent=root.dataset.phase==='idle'?'Prête ?':(ph==='work'&&PR.workLabel?PR.workLabel:labels[ph]);
  $('t-sec').textContent=ph==='done'?'✓':Math.ceil(left);
  var frac=ph==='done'?1:1-left/s.d; ring.style.strokeDashoffset=(C*frac).toFixed(1);
- if(ph==='done'){var k0=$('t-kit');if(k0)k0.hidden=true;$('t-ex').textContent=PNAME==='tronc'?'Bravo, routine terminée !':(PNAME==='etire'?'Bravo, étirements terminés !':'Bravo, circuit terminé !');$('t-meta').textContent=PNAME==='etire'?'Ton corps te remercie.':ROUNDS+' tours faits.'+(COOL?'':' Place aux étirements.');cards.forEach(function(c){c.classList.remove('live');});}
+ if(ph==='done'){var k0=$('t-kit');if(k0)k0.hidden=true;$('t-ex').textContent=PNAME==='aviron'?'Prête à ramer !':PNAME==='tronc'?'Bravo, routine terminée !':(PNAME==='etire'?'Bravo, étirements terminés !':'Bravo, circuit terminé !');$('t-meta').textContent=PNAME==='aviron'?'Bonne séance sur l\u2019eau !':PNAME==='etire'?'Ton corps te remercie.':ROUNDS+' tours faits.'+(COOL?'':' Place aux étirements.');cards.forEach(function(c){c.classList.remove('live');});}
  else if(ph==='cool'){$('t-ex').textContent=COOL.name;var kc=$('t-kit');if(kc){kc.className='kit kit-none';kc.textContent='Sans matériel';kc.hidden=false;}$('t-meta').textContent='Retour au calme · 1 min';cards.forEach(function(c){c.classList.remove('live');});}
  else if(ph==='warm'){$('t-ex').textContent=(s.w+1)+'. '+WU[s.w][0];var kw=$('t-kit');if(kw){kw.className='kit kit-none';kw.textContent='Sans matériel';kw.hidden=false;}$('t-meta').textContent='Échauffement · '+(s.w+1)+' / '+WU.length+' · '+WUD+' s chacun';cards.forEach(function(c){c.classList.remove('live');});}
  else{var ne=s.t==='work'?s.e:(s.e+1)%N,nr=s.t==='work'?s.r:(s.e===N-1?s.r+1:s.r);
@@ -992,7 +1067,7 @@ function render(){
 function enter(i){
  idx=i;spokeMid=spoke10=false;beeped={};
  var s=seq[idx];
- if(!s){running=false;clearInterval(timerId);wake(false);beep(880,.6);say(PNAME==='etire'?'Bravo, étirements terminés. Bonne récupération !':PNAME==='tronc'?'Bravo ! Routine terminée. Ton tronc te remercie.':'Bravo ! Circuit terminé. Tu as tout donné. Place aux étirements.');try{audio.pause();}catch(e){}render();return;}
+ if(!s){running=false;clearInterval(timerId);wake(false);beep(880,.6);say(PNAME==='aviron'?'Échauffement terminé. Tu es prête, bonne séance sur l\u2019eau !':PNAME==='etire'?'Bravo, étirements terminés. Bonne récupération !':PNAME==='tronc'?'Bravo ! Routine terminée. Ton tronc te remercie.':'Bravo ! Circuit terminé. Tu as tout donné. Place aux étirements.');try{audio.pause();}catch(e){}render();return;}
  left=s.d;
  if(s.t==='warm'){beep(1046,.35);say((s.w===0?'On commence par l\u2019échauffement. ':'')+WU[s.w][0]+'. '+WU[s.w][1]);}
  else if(s.t==='prep'){beep(660,.3);say('Échauffement terminé ! Prépare-toi : '+names[0]+(KITSAY[0]?', '+KITSAY[0]:'')+'.');}
@@ -1153,7 +1228,7 @@ render();
   else if(wd===3){ var light=iso>='2026-11-16'&&iso<='2026-11-22'; t='Renfo'+(iso>='2026-10-28'?' au club':''); p=(light?'Semaine allégée : renfo à moitié. ':'')+(iso>='2026-10-28'?'Si tu ne peux pas aller au club, fais le circuit maison.':'Circuit maison avec le chrono.'); btn='Ouvrir le circuit'; go='circuit'; prog='circuit'; }
   else if(wd===4){ t='Vélo · '+(VW?VW.jeu.t.toLowerCase():'facile')+' (facultatif) + Tronc solide'; p=(vtxt('jeu')||'40 min faciles en zone 2 (112–129 bpm).')+' Et la routine « Tronc solide » de 15 min. Saute ce que tu veux si tu es fatiguée.'; btn='Ouvrir Tronc solide'; go='circuit'; prog='tronc'; }
   else if(wd===5){ t='Repos'; p='Prépare tes affaires pour l\u2019aviron de demain. 8 min d\u2019étirements si tu as envie.'; btn='Ouvrir les étirements'; go='circuit'; prog='etire'; }
-  else if(wd===6){ t='Aviron avec l\u2019équipe'; p='Échauffe-toi 10 min à terre, et donne-toi à fond quand le coach fait pousser. Pense à noter ta séance.'; btn='Noter ma séance'; go='stats'; }
+  else if(wd===6){ t='Aviron avec l\u2019équipe'; p='Avant le bateau, fais l\u2019échauffement « Avant l\u2019aviron » de 5 min à terre. Puis donne-toi à fond quand le coach fait pousser, et pense à noter ta séance.'; btn='Échauffement avant l\u2019aviron'; go='circuit'; prog='aviron'; }
   else { t='Vélo · '+(VW?VW.dim.t.toLowerCase():'sortie longue'); p=(vtxt('dim')||'1 h à 1 h 15 en zone 2 (112–129 bpm).')+' Vélo d\u2019appartement ou VTT, en mode libre.'; btn='Noter ma séance'; go='stats'; }
   el.innerHTML='<span class="eyebrow">Aujourd\u2019hui · '+JOURS[wd]+' '+now.getDate()+' '+MOIS[now.getMonth()]+'</span><h3></h3><p></p>'+(btn?'<button type="button"></button>':'');
   el.querySelector('h3').textContent=t; el.querySelector('p').innerHTML=p;
