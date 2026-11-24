@@ -45,9 +45,9 @@ function bilans(list){
       if(a!=null) bestAllure = bestAllure==null?a:Math.min(bestAllure,a);
       if(p!=null) bestPointe = bestPointe==null?p:Math.min(bestPointe,p);
     } else if(s.type==="velo"||s.type==="vtt"){
-      const d=new Date(s.date+"T12:00:00"), hard = d.getDay()===2 && s.date>="2026-11-02";
+      const d=new Date(s.date+"T12:00:00"), hard = d.getDay()===2 && s.date>="2026-11-02" && !(s.date>="2026-11-16" && s.date<="2026-11-22");
       if(s.fcMoy==null) b={t:"Vélo",c:""};
-      else if(hard) b= s.fcMoy>=135? {t:"Séance dure réussie",c:"ok"} : {t:"Pas assez intense",c:"warn"};
+      else if(hard) b= (s.fcMoy>=128 || (s.fcMax!=null && s.fcMax>=150))? {t:"Séance dure réussie",c:"ok"} : {t:"Pas assez intense",c:"warn"};
       else if(s.fcMoy<=130) b={t:"Zone 2 parfaite",c:"ok"};
       else if(s.fcMoy<=135) b={t:"Un peu soutenu",c:"warn"};
       else b={t:"Trop soutenu",c:"warn"};
