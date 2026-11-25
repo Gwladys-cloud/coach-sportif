@@ -182,6 +182,9 @@ button.vday:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .steps .sd{min-width:0}
 .steps .sd small{display:block;color:var(--muted);font-size:.8rem}
 .zp{font-size:.72rem;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;justify-self:end}
+.zps{display:flex;flex-direction:column;align-items:flex-end;gap:4px;justify-self:end}
+.zp.cad{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.zp.rec{font-weight:600;opacity:.85}
 .sx{font-size:.85rem;color:var(--muted);margin:0}
 .zc{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 .vlegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.78rem;color:var(--muted)}
@@ -1123,7 +1126,7 @@ render();
 
 <script>
 (function(){
-  var Z={z1:'Zone 1 · 93–111 bpm',z2:'Zone 2 · 112–129 bpm',hard:'Dur · 145–155 bpm',course:'Allure course · 155–165 bpm',force:'Force · 145–160 bpm max',vite:'Rapide · cadence 105–110'};
+  var Z={z1:'Zone 1 · 93–111 bpm',z2:'Zone 2 · 112–129 bpm',hard:'Dur · 145–155 bpm',course:'Allure course · 155–165 bpm',force:'Force · 145–160 bpm max',vite:'Rapide · rapide'};
   var ZT={z1:'zone 1 (93–111 bpm)',z2:'zone 2 (112–129 bpm)',hard:'dur mais tenable (145–155 bpm)',course:'allure course (155–165 bpm)',force:'en force (cadence 60–65, résistance forte mais pas à fond, 145–160 bpm max)',vite:'en pédalage rapide (cadence 105–110)'};
   var EC=[10,'z1','Échauffement'], RC=[5,'z1','Retour au calme'], EP=[15,'z1','Échauffement progressif, finir en zone 2'], RL=[10,'z1','Retour au calme'];
   function I(rep,on,onZ,onL,off,offZ){ return {rep:rep,on:[on,onZ,onL],off:[off,offZ||'z1','Facile']}; }
@@ -1139,7 +1142,7 @@ render();
    {n:3,start:'2026-10-26',d:'26 oct – 1 nov',ph:'Base · construire le moteur',
     mar:{t:'Endurance',s:[EC,[60,'z2','Endurance, cadence 85–90, environ 15 km/h'],RC]},
     jeu:{t:'Facile',opt:1,s:[EC,[25,'z2','Endurance, cadence 85–90'],RC],x:'En plus : routine « Tronc solide » de 15 min (onglet Renfo).'},
-    dim:{t:'Sortie longue',s:[EC,[55,'z2','Endurance, cadence 85–90'],[5,'z2','Pédalage plus vif : baisse la résistance et monte la cadence à 95–100 (24–25 tours de pied droit en 15 s). Ça doit rester facile, tu peux toujours parler'],RC]}},
+    dim:{t:'Sortie longue',s:[EC,[55,'z2','Endurance, cadence 85–90'],[5,'z2','Pédalage plus vif : baisse la résistance et monte la cadence. Ça doit rester facile, tu peux toujours parler, cadence 95–100'],RC]}},
    {n:4,start:'2026-11-02',d:'2 – 8 nov',ph:'Seuil · monter en intensité',
     mar:{t:'Seuil',s:[EP,I(4,8,'hard','Dur mais tenable, cadence 85–95',3),RL]},
     jeu:{t:'Récupération',opt:1,s:[[35,'z1','Très facile, sans dépasser 120 bpm']],x:'Routine « Tronc solide » (15 min) possible si tu te sens bien.'},
@@ -1153,15 +1156,15 @@ render();
     jeu:{t:'Repos',opt:1,s:[],x:'Repos, ou 20 min en zone 1 (93–111 bpm) si tu en as envie.'},
     dim:{t:'Récupération',opt:1,s:[[30,'z1','Très facile, jambes qui tournent']],x:'Sam 21 : rando aviron à Aiguebelette (15 km), à allure tranquille. Dimanche : repos, ou 30 min très faciles.'}},
    {n:7,start:'2026-11-23',d:'23 – 29 nov',ph:'Allure course',
-    mar:{t:'Allure course + force',s:[EP,I(4,6,'course','Allure course',4),[4,'z1','Facile'],I(3,2,'force','Force : résistance forte mais pas à fond (8/10), cadence 60–65 assise. Baisse si tu dépasses 160 bpm',2),RL]},
-    jeu:{t:'Vélocité',opt:1,s:[EC,[3,'z2','Endurance, cadence 85–90'],I(5,0.5,'vite','Pédalage rapide, résistance légère',1.5),[8,'z2','Endurance, cadence 85–90'],RC]},
-    dim:{t:'Sortie longue',s:[EC,[55,'z2','Endurance, cadence 85–90'],I(4,1/3,'vite','Accélération',1,'z2'),RC]}},
+    mar:{t:'Allure course + force',s:[EP,I(4,6,'course','Allure course',4),[4,'z1','Facile'],I(3,2,'force','Force : résistance forte mais pas à fond (8/10), assise, cadence 60–65',2),RL]},
+    jeu:{t:'Vélocité',opt:1,s:[EC,[3,'z2','Endurance, cadence 85–90'],I(5,0.5,'vite','Pédalage rapide, résistance légère, cadence 105–110',1.5),[8,'z2','Endurance, cadence 85–90'],RC]},
+    dim:{t:'Sortie longue',s:[EC,[55,'z2','Endurance, cadence 85–90'],I(4,1/3,'vite','Accélération, cadence 105–110',1,'z2'),RC]}},
    {n:8,start:'2026-11-30',d:'30 nov – 6 déc',ph:'Allure course',
-    mar:{t:'Allure course + force',s:[EP,I(3,10,'course','Allure course',4),[4,'z1','Facile'],I(3,2,'force','Force : résistance forte mais pas à fond (8/10), cadence 60–65 assise. Baisse si tu dépasses 160 bpm',2),RL],x:'30 min à allure course : un peu plus que la course.'},
-    jeu:{t:'Vélocité',opt:1,s:[EC,[3,'z2','Endurance, cadence 85–90'],I(5,0.5,'vite','Pédalage rapide, résistance légère',1.5),[8,'z2','Endurance, cadence 85–90'],RC]},
-    dim:{t:'Sortie moyenne',s:[EC,[40,'z2','Endurance, cadence 85–90'],I(4,1/3,'vite','Accélération',1,'z2'),RC],x:'Pas plus : la semaine de course arrive.'}},
+    mar:{t:'Allure course + force',s:[EP,I(3,10,'course','Allure course',4),[4,'z1','Facile'],I(3,2,'force','Force : résistance forte mais pas à fond (8/10), assise, cadence 60–65',2),RL],x:'30 min à allure course : un peu plus que la course.'},
+    jeu:{t:'Vélocité',opt:1,s:[EC,[3,'z2','Endurance, cadence 85–90'],I(5,0.5,'vite','Pédalage rapide, résistance légère, cadence 105–110',1.5),[8,'z2','Endurance, cadence 85–90'],RC]},
+    dim:{t:'Sortie moyenne',s:[EC,[40,'z2','Endurance, cadence 85–90'],I(4,1/3,'vite','Accélération, cadence 105–110',1,'z2'),RC],x:'Pas plus : la semaine de course arrive.'}},
    {n:9,start:'2026-12-07',d:'7 – 13 déc',ph:'Affûtage · arriver fraîche',
-    mar:{t:'Rappel allure course',s:[EP,I(2,4,'course','Allure course',4),[4,'z1','Facile'],I(3,1/3,'vite','Sprint',5/3),RL],x:'Mer 9 : mobilité seulement. Sam 12 : séance d’équipe courte.'},
+    mar:{t:'Rappel allure course',s:[EP,I(2,4,'course','Allure course',4),[4,'z1','Facile'],I(3,1/3,'vite','Sprint, cadence 105–110',5/3),RL],x:'Mer 9 : mobilité seulement. Sam 12 : séance d’équipe courte.'},
     jeu:{t:'Très facile',opt:1,s:[[20,'z1','Très facile']],x:'Ou repos.'},
     dim:{t:'La course !',s:[],race:1,x:'Dimanche 13 : la course. Pas de vélo ce week-end.'}}
   ];
@@ -1170,9 +1173,14 @@ render();
   function total(sess){ var t=0; sess.s.forEach(function(x){ if(x.rep) t+=x.rep*x.on[0]+(x.rep-1)*x.off[0]; else t+=x[0]; }); return Math.round(t); }
   function segs(sess){ var o=[]; sess.s.forEach(function(x){ if(x.rep){ for(var i=0;i<x.rep;i++){ o.push([x.on[0],x.on[1]]); if(i<x.rep-1) o.push([x.off[0],x.off[1]]); } } else o.push([x[0],x[1]]); }); return o; }
   function esc(t){ return String(t).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  function split(t){ return {t:t,p:[]}; }
   function stepHtml(x){
-    if(x.rep) return '<li><span class="sm">'+x.rep+' × '+dur(x.on[0])+'</span><span class="sd">'+esc(x.on[2])+'<small>récupération de '+dur(x.off[0])+' entre chaque, en '+ZT[x.off[1]]+'</small></span><span class="zp '+x.on[1]+'">'+Z[x.on[1]].split(' · ')[1]+'</span></li>';
-    return '<li><span class="sm">'+dur(x[0])+'</span><span class="sd">'+esc(x[2])+'</span><span class="zp '+x[1]+'">'+Z[x[1]].split(' · ')[1]+'</span></li>';
+    var on=x.rep?x.on:x, sp=split(on[2]);
+    var main='<span class="zp '+on[1]+'">'+Z[on[1]].split(' · ')[1]+'</span>';
+    var pills=[main].concat(sp.p);
+    var sub='';
+    if(x.rep){ sub='<small>récupération de '+dur(x.off[0])+' entre chaque</small>'; pills.push('<span class="zp '+x.off[1]+' rec">récup '+Z[x.off[1]].split(' · ')[1]+'</span>'); }
+    return '<li><span class="sm">'+(x.rep?x.rep+' × '+dur(x.on[0]):dur(x[0]))+'</span><span class="sd">'+esc(sp.t)+sub+'</span><span class="zps">'+pills.join('')+'</span></li>';
   }
   function card(day,label,sub,sess){
     var tot=total(sess), sg=segs(sess);
